@@ -1,13 +1,234 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Ana Ferli</title>
+
+  <title>Ana Ferli | Content & Marketing Analytics</title>
+  <meta name="description"
+        content="Ana Ferli works on content and marketing analytics, focusing on writing, reporting, data visualization, and maintaining clear, usable marketing data (GA4, Power BI, Excel).">
+
+  <!-- Tailwind CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+
+  <!-- Tailwind theme -->
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            bg: "#0B1220",        // deep blue-black background
+            panel: "#111827",     // panels / cards
+            ink: "#E5E7EB",       // primary text
+            muted: "#9CA3AF",     // secondary text
+            border: "#1F2937",    // borders
+            accent: "#6366F1",    // indigo
+            accent2: "#22D3EE"    // cyan
+          },
+          boxShadow: {
+            soft: "0 20px 40px rgba(0,0,0,0.4)"
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    body { font-family: 'Inter', sans-serif; }
+    h1, h2, h3, .brand { font-family: 'Plus Jakarta Sans', sans-serif; }
+  </style>
 </head>
-<body style="font-family: system-ui; max-width: 720px; margin: 80px auto; padding: 0 16px;">
-  <h1>Ana Ferli</h1>
-  <p>Marketing analytics • strategy • education</p>
-  <p>This site is being assembled.</p>
+
+<body class="bg-bg text-ink antialiased">
+
+  <!-- Navigation -->
+  <nav class="py-6 px-6 border-b border-border bg-bg/80 backdrop-blur">
+    <div class="max-w-5xl mx-auto flex justify-between items-center">
+      <div class="brand font-bold text-xl tracking-tight text-ink">ANA FERLI</div>
+      <div class="space-x-6 text-sm font-medium text-muted">
+        <a href="#work" class="hover:text-accent transition">What I work on</a>
+        <a href="/portfolio/" class="hover:text-accent transition">Portfolio</a>
+        <a href="#about" class="hover:text-accent transition">About</a>
+        <a href="mailto:hello@anaferli.com"
+           class="text-accent hover:text-accent2 transition">Email</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero -->
+  <header class="py-28 px-6">
+    <div class="max-w-3xl mx-auto">
+
+      <p class="text-xs uppercase tracking-widest font-bold text-muted mb-4">
+        Content & Marketing Analytics
+      </p>
+
+      <h1 class="text-4xl md:text-5xl font-bold text-ink mb-6 leading-tight">
+        Content work supported by
+        <span class="text-accent">analytics</span> and
+        <span class="text-accent2">reporting.</span>
+      </h1>
+
+      <p class="text-lg text-muted mb-8 leading-relaxed">
+        I’m Ana. I work on the content and analytics side of marketing — writing and organizing
+        content, tracking performance, maintaining reports, and making sure data is clear and usable.
+        My background in Education informs how I think about structure, clarity, and audience needs.
+      </p>
+
+      <!-- Tools -->
+      <div class="inline-flex items-center gap-2 rounded-full
+                  bg-panel px-4 py-2 border border-border
+                  text-sm text-muted mb-2">
+        <span class="font-semibold text-ink">GA4</span>
+        <span>×</span>
+        <span class="font-semibold text-ink">Power BI</span>
+        <span>×</span>
+        <span class="font-semibold text-ink">Excel</span>
+      </div>
+
+      <p class="text-sm text-muted mb-10">
+        Ongoing support across content, analytics, reporting, and data visualization workflows
+      </p>
+
+      <!-- CTAs -->
+      <div class="flex flex-wrap gap-4">
+        <a href="#work"
+           class="px-6 py-3 bg-ink text-bg rounded-lg font-semibold
+                  hover:opacity-90 transition">
+          What I do in practice
+        </a>
+
+        <a href="/portfolio/"
+           class="px-6 py-3 bg-accent text-white rounded-lg font-semibold
+                  hover:bg-accent2 transition">
+          View portfolio
+        </a>
+
+        <a href="#about"
+           class="px-6 py-3 bg-panel text-ink rounded-lg font-semibold
+                  border border-border hover:border-muted transition">
+          Background
+        </a>
+      </div>
+
+    </div>
+  </header>
+
+  <!-- What I work on -->
+  <section id="work" class="py-20 px-6">
+    <div class="max-w-5xl mx-auto">
+
+      <h2 class="text-xs uppercase tracking-widest font-bold text-muted mb-10">
+        What I work on
+      </h2>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+
+        <!-- Content -->
+        <div class="bg-panel p-8 rounded-2xl border border-border shadow-soft">
+          <h3 class="text-xl font-bold mb-3 text-ink">Content</h3>
+          <p class="text-muted text-sm mb-5 leading-relaxed">
+            Writing, editing, and organizing content so it is clear, accurate, and usable.
+            This includes blog posts, newsletters, and supporting materials that require
+            structure and consistency over time.
+          </p>
+          <ul class="text-xs font-semibold text-accent flex gap-4">
+            <li>Writing</li>
+            <li>Editing</li>
+            <li>Content maintenance</li>
+          </ul>
+        </div>
+
+        <!-- Analytics -->
+        <div class="bg-panel p-8 rounded-2xl border border-border shadow-soft">
+          <h3 class="text-xl font-bold mb-3 text-ink">Marketing analytics & reporting</h3>
+          <p class="text-muted text-sm mb-5 leading-relaxed">
+            Tracking content performance, cleaning data, and building dashboards and visual
+            reports that make patterns easier to see and discuss.
+          </p>
+          <ul class="text-xs font-semibold text-accent2 flex gap-4">
+            <li>GA4</li>
+            <li>Power BI</li>
+            <li>Data visualization</li>
+          </ul>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- About -->
+  <section id="about" class="py-20 px-6 border-t border-border">
+    <div class="max-w-3xl mx-auto">
+
+      <h2 class="text-xs uppercase tracking-widest font-bold text-muted mb-6">
+        About
+      </h2>
+
+      <h3 class="text-2xl font-bold mb-6 text-ink">
+        A practical background, built over time.
+      </h3>
+
+      <div class="text-muted leading-relaxed space-y-4">
+        <p>
+          I began my career in <strong class="text-ink">Education</strong>, which shaped how I
+          approach information: clarity, structure, and respect for the audience.
+        </p>
+
+        <p>
+          Much of my freelance work has involved ongoing, often unglamorous tasks — maintaining
+          content, updating reports, cleaning data, and supporting teams consistently over time.
+          This is where most of my experience was built.
+        </p>
+
+        <p>
+          When it comes to data, I’m most interested in how information is presented and understood.
+          I enjoy working with visualizations because they force clarity: deciding what matters,
+          what can be grouped, and what should be left out. For me, good charts are less about
+          decoration and more about reducing cognitive load so patterns and changes are easier
+          to notice and discuss.
+        </p>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="py-20 px-6 text-center">
+    <div class="max-w-xl mx-auto">
+
+      <h2 class="text-2xl font-bold mb-4 text-ink">Let’s talk.</h2>
+
+      <p class="text-muted mb-8">
+        If you’re looking for support with content or marketing analytics,
+        I’d be happy to talk.
+      </p>
+
+      <div class="flex flex-wrap justify-center gap-4">
+        <a href="mailto:hello@anaferli.com"
+           class="inline-block px-8 py-4 bg-accent text-white rounded-xl
+                  font-bold hover:bg-accent2 transition">
+          Email me
+        </a>
+
+        <a href="/portfolio/"
+           class="inline-block px-8 py-4 bg-panel border border-border
+                  text-ink rounded-xl font-bold hover:border-muted transition">
+          Portfolio
+        </a>
+      </div>
+
+      <div class="mt-12 text-muted text-sm">
+        &copy; 2026 Ana Ferli • Content & Marketing Analytics
+      </div>
+
+    </div>
+  </footer>
+
 </body>
 </html>
