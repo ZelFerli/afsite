@@ -3,9 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
   <title>Portfolio | Ana Ferli</title>
-  <meta name="description" content="Password-protected portfolio with selected work examples by Ana Ferli.">
+  <meta name="description" content="Portfolio access page for Ana Ferli.">
 
   <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700&family=Inter:wght@400;500&display=swap" rel="stylesheet">
@@ -22,9 +21,6 @@
             border: "#1F2937",
             accent: "#6366F1",
             accent2: "#22D3EE"
-          },
-          boxShadow: {
-            soft: "0 20px 40px rgba(0,0,0,0.4)"
           }
         }
       }
@@ -50,69 +46,52 @@
     </div>
   </nav>
 
-  <header class="py-20 px-6">
+  <main class="py-24 px-6">
     <div class="max-w-3xl mx-auto">
+
       <p class="text-xs uppercase tracking-widest font-bold text-muted mb-4">
-        Portfolio (password-protected)
+        Portfolio
       </p>
 
       <h1 class="text-3xl md:text-4xl font-bold mb-6 leading-tight">
-        Selected work and examples.
+        Portfolio access is private.
       </h1>
 
-      <p class="text-muted leading-relaxed mb-10">
-        This section includes a small set of examples: reporting, dashboards, and content operations.
-        Some details are anonymized, and some examples use mock data, as much of my client work
-        is covered by non-disclosure agreements.
-      </p>
+      <div class="text-muted leading-relaxed space-y-5">
+        <p>
+          Many of my client projects are covered by non-disclosure agreements (NDAs), so I keep my
+          portfolio private by default. When I do share examples, details are anonymized, and some
+          demonstrations use mock data.
+        </p>
 
-      <div class="grid grid-cols-1 gap-6">
-        <article class="bg-panel border border-border rounded-2xl p-7 shadow-soft">
-          <h2 class="text-xl font-bold mb-2">Content performance reporting</h2>
-          <p class="text-muted text-sm leading-relaxed mb-5">
-            Tracking content outcomes over time and presenting results in a readable format for non-technical stakeholders.
-          </p>
-          <div class="flex flex-wrap gap-3 text-xs font-semibold">
-            <span class="px-3 py-1 rounded-full border border-border text-muted">GA4</span>
-            <span class="px-3 py-1 rounded-full border border-border text-muted">Reporting</span>
-            <span class="px-3 py-1 rounded-full border border-border text-muted">Data cleanup</span>
-          </div>
-        </article>
+        <p>
+          If you’ve been given the password by me, you can enter it on the next page.
+        </p>
 
-        <article class="bg-panel border border-border rounded-2xl p-7 shadow-soft">
-          <h2 class="text-xl font-bold mb-2">Dashboard & data visualization</h2>
-          <p class="text-muted text-sm leading-relaxed mb-5">
-            Turning raw or messy data into charts and dashboards that make patterns easier to see, compare, and discuss.
-          </p>
-          <div class="flex flex-wrap gap-3 text-xs font-semibold">
-            <span class="px-3 py-1 rounded-full border border-border text-muted">Power BI</span>
-            <span class="px-3 py-1 rounded-full border border-border text-muted">Visualization</span>
-            <span class="px-3 py-1 rounded-full border border-border text-muted">Excel</span>
-          </div>
-        </article>
-
-        <article class="bg-panel border border-border rounded-2xl p-7 shadow-soft">
-          <h2 class="text-xl font-bold mb-2">Content operations support</h2>
-          <p class="text-muted text-sm leading-relaxed mb-5">
-            Ongoing content maintenance: updating pages, organizing assets, improving clarity, and keeping documentation consistent.
-          </p>
-          <div class="flex flex-wrap gap-3 text-xs font-semibold">
-            <span class="px-3 py-1 rounded-full border border-border text-muted">Content</span>
-            <span class="px-3 py-1 rounded-full border border-border text-muted">QA</span>
-            <span class="px-3 py-1 rounded-full border border-border text-muted">Documentation</span>
-          </div>
-        </article>
+        <p>
+          If you’d like to see relevant examples for a role or project, email me and I’ll share access
+          or send a tailored selection.
+        </p>
       </div>
 
-      <div class="mt-12 text-sm text-muted">
-        Want access or have questions?
-        <a class="font-semibold text-accent hover:text-accent2 transition"
-           href="mailto:hello@anaferli.com?subject=Portfolio%20access%20request">
-          Email me →
+      <div class="mt-10 flex flex-wrap gap-4">
+        <a href="/portfolio/private.html"
+           class="px-6 py-3 bg-ink text-bg rounded-lg font-semibold hover:opacity-90 transition">
+          Enter password
+        </a>
+
+        <a href="mailto:hello@anaferli.com?subject=Portfolio%20access%20request"
+           class="px-6 py-3 bg-panel text-ink rounded-lg font-semibold border border-border hover:border-muted transition">
+          Request access by email
         </a>
       </div>
+
+      <p class="mt-10 text-sm text-muted">
+        Tip: If you’re a recruiter/hiring manager, tell me the role you’re hiring for and I’ll share the most relevant examples.
+      </p>
+
     </div>
-  </header>
+  </main>
 
   <footer class="py-12 px-6 border-t border-border text-center">
     <p class="text-muted text-sm">&copy; 2026 Ana Ferli</p>
