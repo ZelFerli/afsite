@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Portfolio | Ana Ferli</title>
+  <meta name="description" content="Password-protected portfolio with selected work examples by Ana Ferli.">
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            bg: "#0B1220",
+            panel: "#111827",
+            ink: "#E5E7EB",
+            muted: "#9CA3AF",
+            border: "#1F2937",
+            accent: "#6366F1",
+            accent2: "#22D3EE"
+          },
+          boxShadow: {
+            soft: "0 20px 40px rgba(0,0,0,0.4)"
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    body { font-family: 'Inter', sans-serif; }
+    h1, h2, h3, .brand { font-family: 'Plus Jakarta Sans', sans-serif; }
+  </style>
+</head>
+
+<body class="bg-bg text-ink antialiased">
+
+  <nav class="py-6 px-6 border-b border-border bg-bg/80 backdrop-blur">
+    <div class="max-w-5xl mx-auto flex justify-between items-center">
+      <a href="/" class="brand font-bold text-xl tracking-tight text-ink">ANA FERLI</a>
+      <div class="space-x-6 text-sm font-medium text-muted">
+        <a href="/" class="hover:text-accent transition">Home</a>
+        <a href="/about.html" class="hover:text-accent transition">About</a>
+        <a href="mailto:hello@anaferli.com" class="text-accent hover:text-accent2 transition">Email</a>
+      </div>
+    </div>
+  </nav>
+
+  <header class="py-20 px-6">
+    <div class="max-w-3xl mx-auto">
+      <p class="text-xs uppercase tracking-widest font-bold text-muted mb-4">
+        Portfolio (password-protected)
+      </p>
+
+      <h1 class="text-3xl md:text-4xl font-bold mb-6 leading-tight">
+        Selected work and examples.
+      </h1>
+
+      <p class="text-muted leading-relaxed mb-10">
+        This section includes a small set of examples: reporting, dashboards, and content operations.
+        Some details are anonymized or summarized to respect confidentiality.
+      </p>
+
+      <div class="grid grid-cols-1 gap-6">
+        <article class="bg-panel border border-border rounded-2xl p-7 shadow-soft">
+          <h2 class="text-xl font-bold mb-2">Content performance reporting</h2>
+          <p class="text-muted text-sm leading-relaxed mb-5">
+            Tracking content outcomes over time and presenting results in a readable format for non-technical stakeholders.
+          </p>
+          <div class="flex flex-wrap gap-3 text-xs font-semibold">
+            <span class="px-3 py-1 rounded-full border border-border text-muted">GA4</span>
+            <span class="px-3 py-1 rounded-full border border-border text-muted">Reporting</span>
+            <span class="px-3 py-1 rounded-full border border-border text-muted">Data cleanup</span>
+          </div>
+        </article>
+
+        <article class="bg-panel border border-border rounded-2xl p-7 shadow-soft">
+          <h2 class="text-xl font-bold mb-2">Dashboard & data visualization</h2>
+          <p class="text-muted text-sm leading-relaxed mb-5">
+            Turning raw or messy data into charts and dashboards that make patterns easier to see, compare, and discuss.
+          </p>
+          <div class="flex flex-wrap gap-3 text-xs font-semibold">
+            <span class="px-3 py-1 rounded-full border border-border text-muted">Power BI</span>
+            <span class="px-3 py-1 rounded-full border border-border text-muted">Visualization</span>
+            <span class="px-3 py-1 rounded-full border border-border text-muted">Excel</span>
+          </div>
+        </article>
+
+        <article class="bg-panel border border-border rounded-2xl p-7 shadow-soft">
+          <h2 class="text-xl font-bold mb-2">Content operations support</h2>
+          <p class="text-muted text-sm leading-relaxed mb-5">
+            Ongoing content maintenance: updating pages, organizing assets, improving clarity, and keeping documentation consistent.
+          </p>
+          <div class="flex flex-wrap gap-3 text-xs font-semibold">
+            <span class="px-3 py-1 rounded-full border border-border text-muted">Content</span>
+            <span class="px-3 py-1 rounded-full border border-border text-muted">QA</span>
+            <span class="px-3 py-1 rounded-full border border-border text-muted">Documentation</span>
+          </div>
+        </article>
+      </div>
+
+      <div class="mt-12 text-sm text-muted">
+        Want access or have questions?
+        <a class="font-semibold text-accent hover:text-accent2 transition"
+           href="mailto:hello@anaferli.com?subject=Portfolio%20access%20request">
+          Email me →
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <footer class="py-12 px-6 border-t border-border text-center">
+    <p class="text-muted text-sm">&copy; 2026 Ana Ferli</p>
+  </footer>
+
+</body>
+</html>
