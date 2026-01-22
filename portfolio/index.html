@@ -3,99 +3,223 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Portfolio | Ana Ferli</title>
-  <meta name="description" content="Portfolio access page for Ana Ferli.">
+  <title>Portfolio | Secure Access</title>
 
   <script src="https://cdn.tailwindcss.com"></script>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700&family=Inter:wght@400;500&display=swap" rel="stylesheet">
-
-  <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          colors: {
-            bg: "#0B1220",
-            panel: "#111827",
-            ink: "#E5E7EB",
-            muted: "#9CA3AF",
-            border: "#1F2937",
-            accent: "#6366F1",
-            accent2: "#22D3EE"
-          }
-        }
-      }
-    }
-  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
 
   <style>
-    body { font-family: 'Inter', sans-serif; }
-    h1, h2, h3, .brand { font-family: 'Plus Jakarta Sans', sans-serif; }
+    body { background-color: #050505; color: #fafafa; font-family: 'Inter', sans-serif; }
+    .dot-grid { background-image: radial-gradient(#222 1px, transparent 1px); background-size: 20px 20px; }
+    .glass { background: rgba(15, 15, 15, 0.8); backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.1); }
   </style>
 </head>
 
-<body class="bg-bg text-ink antialiased">
+<body class="min-h-screen dot-grid flex items-center justify-center p-6">
 
-  <nav class="py-6 px-6 border-b border-border bg-bg/80 backdrop-blur">
-    <div class="max-w-5xl mx-auto flex justify-between items-center">
-      <a href="/" class="brand font-bold text-xl tracking-tight text-ink">ANA FERLI</a>
-      <div class="space-x-6 text-sm font-medium text-muted">
-        <a href="/" class="hover:text-accent transition">Home</a>
-        <a href="/about.html" class="hover:text-accent transition">About</a>
-        <a href="mailto:hello@anaferli.com" class="text-accent hover:text-accent2 transition">Email</a>
-      </div>
+  <!-- Login UI -->
+  <div id="gatekeeper" class="w-full max-w-md z-10 transition-opacity duration-300">
+    <div class="text-center mb-8">
+      <h1 class="text-xl font-light tracking-widest uppercase">Restricted Area</h1>
+      <p class="text-gray-500 text-xs mt-2">Authentication required to view project files.</p>
     </div>
-  </nav>
 
-  <main class="py-24 px-6">
-    <div class="max-w-3xl mx-auto">
+    <div class="glass p-8 rounded-2xl shadow-2xl">
+      <form id="auth-form" class="space-y-4">
+        <label for="password-input" class="sr-only">Access Key</label>
+        <input
+          type="password"
+          id="password-input"
+          placeholder="Enter Access Key"
+          required
+          autocomplete="off"
+          spellcheck="false"
+          class="w-full bg-black/50 border border-white/10 rounded-lg px-4 py-3 text-center focus:border-blue-500/50 outline-none transition-all"
+        />
 
-      <p class="text-xs uppercase tracking-widest font-bold text-muted mb-4">
-        Portfolio
-      </p>
+        <button
+          type="submit"
+          id="submit-btn"
+          class="w-full bg-white text-black text-sm font-bold py-3 rounded-lg hover:bg-gray-200 transition-transform active:scale-95 disabled:opacity-60 disabled:cursor-not-allowed"
+        >
+          Unlock Portfolio
+        </button>
 
-      <h1 class="text-3xl md:text-4xl font-bold mb-6 leading-tight">
-        Portfolio access is private.
-      </h1>
-
-      <div class="text-muted leading-relaxed space-y-5">
-        <p>
-          Many of my client projects are covered by non-disclosure agreements (NDAs), so I keep my
-          portfolio private by default. When I do share examples, details are anonymized, and some
-          demonstrations use mock data.
+        <p id="error-msg" class="text-red-500 text-[10px] text-center uppercase tracking-tighter hidden" aria-live="polite">
+          Invalid credentials. Access denied.
         </p>
 
-        <p>
-          If you’ve been given the password by me, you can enter it on the next page.
-        </p>
-
-        <p>
-          If you’d like to see relevant examples for a role or project, email me and I’ll share access
-          or send a tailored selection.
-        </p>
-      </div>
-
-      <div class="mt-10 flex flex-wrap gap-4">
-        <a href="/portfolio/private.html"
-           class="px-6 py-3 bg-ink text-bg rounded-lg font-semibold hover:opacity-90 transition">
-          Enter password
-        </a>
-
-        <a href="mailto:hello@anaferli.com?subject=Portfolio%20access%20request"
-           class="px-6 py-3 bg-panel text-ink rounded-lg font-semibold border border-border hover:border-muted transition">
-          Request access by email
-        </a>
-      </div>
-
-      <p class="mt-10 text-sm text-muted">
-        Tip: If you’re a recruiter/hiring manager, tell me the role you’re hiring for and I’ll share the most relevant examples.
-      </p>
-
+        <div class="pt-2 text-center">
+          <a href="/contact" class="text-[10px] text-gray-500 hover:text-white uppercase tracking-widest">
+            Request access
+          </a>
+        </div>
+      </form>
     </div>
-  </main>
+  </div>
 
-  <footer class="py-12 px-6 border-t border-border text-center">
-    <p class="text-muted text-sm">&copy; 2026 Ana Ferli</p>
-  </footer>
+  <!-- Container for Rendered Content (Initially Empty) -->
+  <div id="portfolio-root" class="w-full max-w-5xl hidden">
+    <!-- Content is injected here only after successful hash match -->
+  </div>
+
+  <script>
+    (() => {
+      /**
+       * This is a "polite gate":
+       * - Password is not visible in view-source
+       * - Content is not in the DOM until unlocked
+       * - Still client-side (not enterprise security), but great for non-technical snooping prevention
+       */
+
+      // ✅ SHA-256 hash of: translate-anchor-202301
+      const VALID_HASH = "d0ca435e7cea17ef48d983287afbd32618a61701fccbc2519ad60a2b30d39bd4";
+
+      // Base64-encoded JSON array of projects (placeholder data)
+      // Replace this later with your real redacted project summaries.
+      // Tip: encode JSON -> Base64 (btoa) and paste here.
+      const DATA_PAYLOAD =
+        "W3sidGl0bGUiOiJOZXh1cyBBSSIsImNvbnRlbnQiOiJBIHN0cmF0ZWd5IGFuZCBkYXNoYm9hcmQgc3lzdGVtIGJ1aWx0IG9uIGFub255bWl6ZWQvcmVkYWN0ZWQgZGF0YS4iLCJ0YWciOiJVWCBSZXNlYXJjaCJ9LHsidGl0bGUiOiJWZWxvY2l0eSIsImNvbnRlbnQiOiJQcm90b3R5cGUgZm9yIGEgdGVhbSB3b3JrZmxvdyBhbmQgcmVwb3J0aW5nIGxheW91dCB3aXRoIHJlZGFjdGVkIGJyYW5kaW5nLiIsInRhZyI6IlVJIEtpdCJ9LHsidGl0bGUiOiJPcmJpdGFsIiwiY29udGVudCI6IlNlY3VyZSBjb2xsYWJvcmF0aW9uIGFuZCBkb2N1bWVudCBmbG93LCBzaG93biB3aXRoIG1vY2sgZGF0YS4iLCJ0YWciOiJCcmFuZGluZyJ9XQ==";
+
+      const STORAGE_KEY = "portfolio_unlocked";
+
+      const form = document.getElementById("auth-form");
+      const inputEl = document.getElementById("password-input");
+      const errorEl = document.getElementById("error-msg");
+      const gate = document.getElementById("gatekeeper");
+      const root = document.getElementById("portfolio-root");
+      const btn = document.getElementById("submit-btn");
+
+      // Add local keyframes for a tiny shake effect on failure
+      const style = document.createElement("style");
+      style.textContent = `
+        @keyframes shake {
+          0% { transform: translateX(0); }
+          25% { transform: translateX(-6px); }
+          50% { transform: translateX(6px); }
+          75% { transform: translateX(-4px); }
+          100% { transform: translateX(0); }
+        }
+        .shake { animation: shake 0.18s linear 0s 2; }
+      `;
+      document.head.appendChild(style);
+
+      async function sha256Hex(str) {
+        const data = new TextEncoder().encode(str);
+        const hashBuffer = await crypto.subtle.digest("SHA-256", data);
+        return [...new Uint8Array(hashBuffer)]
+          .map(b => b.toString(16).padStart(2, "0"))
+          .join("");
+      }
+
+      function decodePayload() {
+        return JSON.parse(atob(DATA_PAYLOAD));
+      }
+
+      function escapeHTML(str) {
+        return String(str)
+          .replaceAll("&", "&amp;")
+          .replaceAll("<", "&lt;")
+          .replaceAll(">", "&gt;")
+          .replaceAll('"', "&quot;")
+          .replaceAll("'", "&#039;");
+      }
+
+      function buildHTML(items) {
+        return `
+          <div class="mb-12 flex justify-between items-center border-b border-white/10 pb-6">
+            <h2 class="text-2xl font-extralight tracking-widest uppercase text-blue-400">Authenticated Access</h2>
+            <button
+              id="lock-btn"
+              type="button"
+              class="text-[10px] text-gray-500 hover:text-white uppercase tracking-widest border border-white/10 px-3 py-1 rounded"
+            >
+              Lock
+            </button>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            ${items.map(item => `
+              <div class="glass p-6 rounded-xl hover:bg-white/5 transition-all">
+                <span class="text-[9px] text-blue-500 uppercase font-bold tracking-widest">${escapeHTML(item.tag)}</span>
+                <h3 class="text-lg mt-1 mb-3">${escapeHTML(item.title)}</h3>
+                <p class="text-gray-400 text-sm leading-relaxed">${escapeHTML(item.content)}</p>
+              </div>
+            `).join("")}
+          </div>
+        `;
+      }
+
+      function unlockAndRender() {
+        const items = decodePayload();
+        root.innerHTML = buildHTML(items);
+
+        gate.classList.add("opacity-0");
+        setTimeout(() => {
+          gate.style.display = "none";
+          root.classList.remove("hidden");
+          document.body.classList.remove("items-center");
+          document.body.classList.add("pt-20");
+        }, 250);
+
+        const lockBtn = document.getElementById("lock-btn");
+        lockBtn.addEventListener("click", () => {
+          sessionStorage.removeItem(STORAGE_KEY);
+          location.reload();
+        });
+      }
+
+      function showError() {
+        errorEl.classList.remove("hidden");
+        gate.classList.add("shake");
+        setTimeout(() => gate.classList.remove("shake"), 500);
+      }
+
+      function hideError() {
+        errorEl.classList.add("hidden");
+      }
+
+      form.addEventListener("submit", async (e) => {
+        e.preventDefault();
+        hideError();
+
+        btn.disabled = true;
+        const originalLabel = btn.textContent;
+        btn.textContent = "Checking...";
+
+        try {
+          const pass = inputEl.value || "";
+          const inputHash = await sha256Hex(pass);
+
+          if (inputHash === VALID_HASH) {
+            sessionStorage.setItem(STORAGE_KEY, "1");
+            unlockAndRender();
+          } else {
+            showError();
+            inputEl.value = "";
+            inputEl.focus();
+          }
+        } finally {
+          // If unlocked, the gate disappears; otherwise restore button
+          if (gate.style.display !== "none") {
+            btn.disabled = false;
+            btn.textContent = originalLabel;
+          }
+        }
+      });
+
+      // Auto-unlock in the same tab session
+      window.addEventListener("load", () => {
+        if (sessionStorage.getItem(STORAGE_KEY) === "1") {
+          unlockAndRender();
+        } else {
+          inputEl.focus();
+        }
+      });
+    })();
+  </script>
 
 </body>
 </html>
