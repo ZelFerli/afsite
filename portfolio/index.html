@@ -60,26 +60,14 @@
     </div>
   </div>
 
-  <!-- Container for Rendered Content (Initially Empty) -->
-  <div id="portfolio-root" class="w-full max-w-5xl hidden">
-    <!-- Content is injected here only after successful hash match -->
-  </div>
+  <!-- Portfolio Root -->
+  <div id="portfolio-root" class="w-full max-w-5xl hidden"></div>
 
   <script>
     (() => {
-      /**
-       * This is a "polite gate":
-       * - Password is not visible in view-source
-       * - Content is not in the DOM until unlocked
-       * - Still client-side (not enterprise security), but great for non-technical snooping prevention
-       */
-
-      // ✅ SHA-256 hash of: translate-anchor-202301
+      // 
       const VALID_HASH = "d0ca435e7cea17ef48d983287afbd32618a61701fccbc2519ad60a2b30d39bd4";
 
-      // Base64-encoded JSON array of projects (placeholder data)
-      // Replace this later with your real redacted project summaries.
-      // Tip: encode JSON -> Base64 (btoa) and paste here.
       const DATA_PAYLOAD =
         "W3sidGl0bGUiOiJOZXh1cyBBSSIsImNvbnRlbnQiOiJBIHN0cmF0ZWd5IGFuZCBkYXNoYm9hcmQgc3lzdGVtIGJ1aWx0IG9uIGFub255bWl6ZWQvcmVkYWN0ZWQgZGF0YS4iLCJ0YWciOiJVWCBSZXNlYXJjaCJ9LHsidGl0bGUiOiJWZWxvY2l0eSIsImNvbnRlbnQiOiJQcm90b3R5cGUgZm9yIGEgdGVhbSB3b3JrZmxvdyBhbmQgcmVwb3J0aW5nIGxheW91dCB3aXRoIHJlZGFjdGVkIGJyYW5kaW5nLiIsInRhZyI6IlVJIEtpdCJ9LHsidGl0bGUiOiJPcmJpdGFsIiwiY29udGVudCI6IlNlY3VyZSBjb2xsYWJvcmF0aW9uIGFuZCBkb2N1bWVudCBmbG93LCBzaG93biB3aXRoIG1vY2sgZGF0YS4iLCJ0YWciOiJCcmFuZGluZyJ9XQ==";
 
@@ -91,20 +79,6 @@
       const gate = document.getElementById("gatekeeper");
       const root = document.getElementById("portfolio-root");
       const btn = document.getElementById("submit-btn");
-
-      // Add local keyframes for a tiny shake effect on failure
-      const style = document.createElement("style");
-      style.textContent = `
-        @keyframes shake {
-          0% { transform: translateX(0); }
-          25% { transform: translateX(-6px); }
-          50% { transform: translateX(6px); }
-          75% { transform: translateX(-4px); }
-          100% { transform: translateX(0); }
-        }
-        .shake { animation: shake 0.18s linear 0s 2; }
-      `;
-      document.head.appendChild(style);
 
       async function sha256Hex(str) {
         const data = new TextEncoder().encode(str);
@@ -130,30 +104,28 @@
       function buildHTML(items) {
         return `
           <div class="mb-12 flex justify-between items-center border-b border-white/10 pb-6">
-  <h2 class="text-2xl font-extralight tracking-widest uppercase text-blue-400">
-    Authenticated Access
-  </h2>
+            <h2 class="text-2xl font-extralight tracking-widest uppercase text-blue-400">
+              Authenticated Access
+            </h2>
 
-  <div class="flex items-center gap-2">
-    <button
-  id="back-btn"
-  type="button"
-  class="text-[10px] text-gray-500 hover:text-white uppercase tracking-widest border border-white/10 px-3 py-1 rounded transition-colors"
->
-  Back to site
-</button>
+            <div class="flex items-center gap-2">
+              <button
+                id="back-btn"
+                type="button"
+                class="text-[10px] text-gray-500 hover:text-white uppercase tracking-widest border border-white/10 px-3 py-1 rounded transition-colors"
+              >
+                Back to site
+              </button>
 
-
-    <button
-      id="lock-btn"
-      type="button"
-      class="text-[10px] text-gray-500 hover:text-white uppercase tracking-widest border border-white/10 px-3 py-1 rounded transition-colors"
-    >
-      Lock
-    </button>
-  </div>
-</div>
-
+              <button
+                id="lock-btn"
+                type="button"
+                class="text-[10px] text-gray-500 hover:text-white uppercase tracking-widest border border-white/10 px-3 py-1 rounded transition-colors"
+              >
+                Lock
+              </button>
+            </div>
+          </div>
 
           <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
             ${items.map(item => `
@@ -179,45 +151,36 @@
           document.body.classList.add("pt-20");
         }, 250);
 
-        const lockBtn = document.getElementById("lock-btn");
-        lockBtn.addEventListener("click", () => {
+        document.getElementById("lock-btn").addEventListener("click", () => {
           sessionStorage.removeItem(STORAGE_KEY);
           location.reload();
         });
-      }
 
-      function showError() {
-        errorEl.classList.remove("hidden");
-        gate.classList.add("shake");
-        setTimeout(() => gate.classList.remove("shake"), 500);
-      }
-
-      function hideError() {
-        errorEl.classList.add("hidden");
+        document.getElementById("back-btn").addEventListener("click", () => {
+          sessionStorage.removeItem(STORAGE_KEY);
+          window.location.href = "/index.html";
+        });
       }
 
       form.addEventListener("submit", async (e) => {
         e.preventDefault();
-        hideError();
+        errorEl.classList.add("hidden");
 
         btn.disabled = true;
         const originalLabel = btn.textContent;
         btn.textContent = "Checking...";
 
         try {
-          const pass = inputEl.value || "";
-          const inputHash = await sha256Hex(pass);
-
+          const inputHash = await sha256Hex(inputEl.value || "");
           if (inputHash === VALID_HASH) {
             sessionStorage.setItem(STORAGE_KEY, "1");
             unlockAndRender();
           } else {
-            showError();
+            errorEl.classList.remove("hidden");
             inputEl.value = "";
             inputEl.focus();
           }
         } finally {
-          // If unlocked, the gate disappears; otherwise restore button
           if (gate.style.display !== "none") {
             btn.disabled = false;
             btn.textContent = originalLabel;
@@ -225,7 +188,6 @@
         }
       });
 
-      // Auto-unlock in the same tab session
       window.addEventListener("load", () => {
         if (sessionStorage.getItem(STORAGE_KEY) === "1") {
           unlockAndRender();
