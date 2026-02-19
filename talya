@@ -1,0 +1,1323 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Talya's French Food Explorer!</title>
+<link href="https://fonts.googleapis.com/css2?family=Bubblegum+Sans&family=Fredoka+One&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --blue: #4A90D9;
+    --red: #E8394D;
+    --cream: #FFF8F0;
+    --yellow: #FFD166;
+    --mint: #06D6A0;
+    --lavender: #C9B8FF;
+    --peach: #FFB4A2;
+    --dark: #2D2A32;
+    --orange: #FF8C42;
+    --teal: #0ABDE3;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--cream);
+    font-family: 'Nunito', sans-serif;
+    color: var(--dark);
+    overflow-x: hidden;
+  }
+
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: radial-gradient(circle, #FFD16640 2px, transparent 2px);
+    background-size: 30px 30px;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .page {
+    position: relative;
+    z-index: 1;
+    max-width: 700px;
+    margin: 0 auto;
+    padding: 20px;
+  }
+
+  /* NAV */
+  .nav {
+    position: sticky;
+    top: 12px;
+    z-index: 100;
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-bottom: 10px;
+  }
+
+  .nav-btn {
+    background: white;
+    border: 2.5px solid var(--dark);
+    border-radius: 50px;
+    padding: 7px 16px;
+    font-family: 'Fredoka One', cursive;
+    font-size: 0.82em;
+    cursor: pointer;
+    box-shadow: 3px 3px 0 var(--dark);
+    transition: all 0.15s;
+    text-decoration: none;
+    color: var(--dark);
+    white-space: nowrap;
+  }
+
+  .nav-btn:hover {
+    transform: translate(-2px, -2px);
+    box-shadow: 5px 5px 0 var(--dark);
+  }
+
+  /* SECTIONS */
+  .section {
+    background: white;
+    border-radius: 32px;
+    padding: 40px 36px;
+    margin: 30px 0;
+    position: relative;
+    box-shadow: 8px 8px 0px var(--dark);
+    border: 3px solid var(--dark);
+    animation: popIn 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+    scroll-margin-top: 80px;
+  }
+
+  @keyframes popIn {
+    from { opacity: 0; transform: translateY(20px) scale(0.95); }
+    to { opacity: 1; transform: translateY(0) scale(1); }
+  }
+
+  .section:nth-child(2)  { animation-delay: 0.05s; background: #FFF0F5; }
+  .section:nth-child(3)  { animation-delay: 0.10s; background: #F0F8FF; }
+  .section:nth-child(4)  { animation-delay: 0.15s; background: #F0FFF8; }
+  .section:nth-child(5)  { animation-delay: 0.20s; background: #FFFBF0; }
+  .section:nth-child(6)  { animation-delay: 0.25s; background: #FFF0E8; }
+  .section:nth-child(7)  { animation-delay: 0.30s; background: #F5F0FF; }
+  .section:nth-child(8)  { animation-delay: 0.35s; background: #F0FFFC; }
+  .section:nth-child(9)  { animation-delay: 0.40s; background: #FFF8F0; }
+  .section:nth-child(10) { animation-delay: 0.45s; background: #F8F0FF; }
+
+  /* COVER */
+  .cover {
+    text-align: center;
+    background: linear-gradient(135deg, #FFE8F0 0%, #E8F4FF 50%, #E8FFF8 100%) !important;
+    overflow: hidden;
+  }
+
+  .cover::before {
+    content: '🗼';
+    position: absolute;
+    font-size: 120px;
+    opacity: 0.07;
+    top: -20px;
+    right: -10px;
+    transform: rotate(10deg);
+  }
+
+  .flag {
+    display: flex;
+    justify-content: center;
+    border-radius: 12px;
+    overflow: hidden;
+    border: 3px solid var(--dark);
+    width: 80px;
+    height: 52px;
+    margin: 0 auto 20px;
+    box-shadow: 4px 4px 0 var(--dark);
+  }
+
+  .flag-stripe { flex: 1; }
+  .flag-stripe.blue  { background: #002395; }
+  .flag-stripe.white { background: white; }
+  .flag-stripe.red   { background: #ED2939; }
+
+  .cover h1 {
+    font-family: 'Fredoka One', cursive;
+    font-size: 2.8em;
+    color: var(--dark);
+    line-height: 1.1;
+    margin: 16px 0 8px;
+  }
+
+  .cover h1 span {
+    display: block;
+    font-family: 'Bubblegum Sans', cursive;
+    font-size: 0.55em;
+    color: var(--blue);
+    letter-spacing: 2px;
+  }
+
+  .cover-emojis {
+    font-size: 2.5em;
+    margin: 16px 0;
+    letter-spacing: 4px;
+    animation: bounce 2s infinite;
+  }
+
+  @keyframes bounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-8px); }
+  }
+
+  .bonjour-badge {
+    display: inline-block;
+    background: var(--yellow);
+    border: 3px solid var(--dark);
+    border-radius: 50px;
+    padding: 10px 28px;
+    font-family: 'Fredoka One', cursive;
+    font-size: 1.5em;
+    box-shadow: 4px 4px 0 var(--dark);
+    margin-top: 16px;
+    transform: rotate(-2deg);
+    transition: transform 0.2s;
+  }
+  .bonjour-badge:hover { transform: rotate(2deg) scale(1.05); }
+
+  .cover-chapters {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    justify-content: center;
+    margin-top: 24px;
+  }
+
+  .cover-chapter-tag {
+    background: white;
+    border: 2px solid var(--dark);
+    border-radius: 50px;
+    padding: 6px 14px;
+    font-size: 0.8em;
+    font-weight: 800;
+    box-shadow: 3px 3px 0 var(--dark);
+  }
+
+  /* SECTION HEADERS */
+  .section-title {
+    font-family: 'Fredoka One', cursive;
+    font-size: 1.8em;
+    margin-bottom: 6px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .section-subtitle {
+    font-size: 0.82em;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    opacity: 0.45;
+    margin-bottom: 24px;
+  }
+
+  /* PHRASE CARDS */
+  .phrase-card {
+    background: white;
+    border: 2.5px solid var(--dark);
+    border-radius: 20px;
+    padding: 16px 20px;
+    margin: 12px 0;
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    box-shadow: 4px 4px 0 var(--dark);
+    transition: transform 0.15s, box-shadow 0.15s;
+  }
+
+  .phrase-card:hover {
+    transform: translate(-2px, -2px);
+    box-shadow: 6px 6px 0 var(--dark);
+  }
+
+  .phrase-emoji { font-size: 1.8em; flex-shrink: 0; margin-top: 2px; }
+
+  .phrase-content { flex: 1; }
+
+  .phrase-french {
+    font-family: 'Fredoka One', cursive;
+    font-size: 1.15em;
+    color: var(--blue);
+    margin-bottom: 2px;
+  }
+
+  .phrase-pronunciation {
+    font-size: 0.8em;
+    color: #999;
+    font-style: italic;
+    margin-bottom: 4px;
+  }
+
+  .phrase-english {
+    font-size: 0.9em;
+    font-weight: 700;
+    color: var(--dark);
+  }
+
+  /* TIP CARDS */
+  .tip-card {
+    background: white;
+    border: 2.5px solid var(--dark);
+    border-radius: 20px;
+    padding: 16px 20px;
+    margin: 12px 0;
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    box-shadow: 4px 4px 0 var(--dark);
+    transition: transform 0.15s, box-shadow 0.15s;
+  }
+
+  .tip-card:hover {
+    transform: translate(-2px, -2px);
+    box-shadow: 6px 6px 0 var(--dark);
+  }
+
+  .tip-icon {
+    font-size: 1.8em;
+    flex-shrink: 0;
+    width: 46px;
+    height: 46px;
+    background: var(--yellow);
+    border: 2.5px solid var(--dark);
+    border-radius: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .tip-content { flex: 1; }
+
+  .tip-title {
+    font-family: 'Fredoka One', cursive;
+    font-size: 1.05em;
+    color: var(--dark);
+    margin-bottom: 4px;
+  }
+
+  .tip-text {
+    font-size: 0.88em;
+    line-height: 1.5;
+    color: #555;
+    font-weight: 600;
+  }
+
+  .tip-french {
+    display: inline-block;
+    margin-top: 6px;
+    background: #EEF6FF;
+    border: 1.5px solid #BDDCFF;
+    border-radius: 10px;
+    padding: 4px 10px;
+    font-size: 0.82em;
+    font-family: 'Fredoka One', cursive;
+    color: var(--blue);
+  }
+
+  /* FOOD CARDS */
+  .food-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+    margin: 20px 0;
+  }
+
+  .food-card {
+    background: white;
+    border: 2.5px solid var(--dark);
+    border-radius: 20px;
+    padding: 20px 16px;
+    text-align: center;
+    box-shadow: 4px 4px 0 var(--dark);
+    transition: transform 0.15s, box-shadow 0.15s;
+  }
+
+  .food-card:hover {
+    transform: translate(-3px, -3px);
+    box-shadow: 7px 7px 0 var(--dark);
+  }
+
+  .food-card:nth-child(1) { background: #FFF0E8; }
+  .food-card:nth-child(2) { background: #FFF8E8; }
+  .food-card:nth-child(3) { background: #E8F8FF; }
+  .food-card:nth-child(4) { background: #F8E8FF; }
+  .food-card:nth-child(5) { background: #E8FFE8; grid-column: 1 / -1; max-width: 240px; margin: 0 auto; width: 100%; }
+
+  .food-emoji { font-size: 2.8em; margin-bottom: 10px; }
+  .food-french { font-family: 'Fredoka One', cursive; font-size: 1em; margin-bottom: 3px; }
+  .food-pronunciation { font-size: 0.72em; color: #aaa; font-style: italic; margin-bottom: 4px; }
+  .food-english { font-size: 0.82em; font-weight: 800; color: var(--red); }
+
+  /* HIGHLIGHT PHRASE */
+  .highlight-phrase {
+    background: var(--yellow);
+    border: 3px solid var(--dark);
+    border-radius: 20px;
+    padding: 20px 24px;
+    margin: 20px 0;
+    box-shadow: 5px 5px 0 var(--dark);
+    text-align: center;
+  }
+
+  .highlight-phrase .label {
+    font-size: 0.75em;
+    font-weight: 800;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    opacity: 0.6;
+    margin-bottom: 8px;
+  }
+
+  .highlight-phrase .french {
+    font-family: 'Fredoka One', cursive;
+    font-size: 1.4em;
+    color: var(--dark);
+    margin-bottom: 4px;
+  }
+
+  .highlight-phrase .pronunciation {
+    font-size: 0.82em;
+    color: #777;
+    font-style: italic;
+    margin-bottom: 6px;
+  }
+
+  .highlight-phrase .english { font-size: 1em; font-weight: 800; }
+
+  /* RULE CARDS (manners) */
+  .rule-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin: 16px 0;
+  }
+
+  .rule-card {
+    background: white;
+    border: 2.5px solid var(--dark);
+    border-radius: 18px;
+    padding: 16px 14px;
+    text-align: center;
+    box-shadow: 4px 4px 0 var(--dark);
+    transition: transform 0.15s, box-shadow 0.15s;
+  }
+
+  .rule-card:hover {
+    transform: translate(-2px, -2px);
+    box-shadow: 6px 6px 0 var(--dark);
+  }
+
+  .rule-card .rule-emoji { font-size: 2em; margin-bottom: 8px; }
+  .rule-card .rule-title { font-family: 'Fredoka One', cursive; font-size: 0.95em; margin-bottom: 4px; }
+  .rule-card .rule-text { font-size: 0.78em; color: #666; font-weight: 600; line-height: 1.4; }
+
+  /* DO / DON'T */
+  .do-dont {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+    margin: 16px 0;
+  }
+
+  .do-box, .dont-box {
+    border: 2.5px solid var(--dark);
+    border-radius: 18px;
+    padding: 16px;
+    box-shadow: 4px 4px 0 var(--dark);
+  }
+
+  .do-box { background: #E8FFF4; }
+  .dont-box { background: #FFF0F0; }
+
+  .do-box .box-title {
+    font-family: 'Fredoka One', cursive;
+    font-size: 1em;
+    color: var(--mint);
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .dont-box .box-title {
+    font-family: 'Fredoka One', cursive;
+    font-size: 1em;
+    color: var(--red);
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .do-item, .dont-item {
+    font-size: 0.82em;
+    font-weight: 700;
+    padding: 6px 0;
+    border-bottom: 1.5px dashed #ddd;
+    display: flex;
+    align-items: flex-start;
+    gap: 6px;
+    line-height: 1.4;
+  }
+
+  .do-item:last-child, .dont-item:last-child { border-bottom: none; }
+
+  /* CAFÉ MENU STYLE */
+  .menu-card {
+    background: #FFFBF0;
+    border: 2.5px solid var(--dark);
+    border-radius: 20px;
+    padding: 20px;
+    margin: 14px 0;
+    box-shadow: 4px 4px 0 var(--dark);
+  }
+
+  .menu-card-title {
+    font-family: 'Fredoka One', cursive;
+    font-size: 1.1em;
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    border-bottom: 2px dashed #ddd;
+    padding-bottom: 10px;
+  }
+
+  .menu-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 0;
+    border-bottom: 1px dotted #ddd;
+    gap: 10px;
+  }
+
+  .menu-row:last-child { border-bottom: none; }
+
+  .menu-item-name {
+    font-family: 'Fredoka One', cursive;
+    font-size: 0.95em;
+    color: var(--dark);
+  }
+
+  .menu-item-sub {
+    font-size: 0.75em;
+    color: #999;
+    font-style: italic;
+  }
+
+  .menu-phrase {
+    font-size: 0.8em;
+    background: #EEF6FF;
+    border: 1.5px solid #BDDCFF;
+    border-radius: 10px;
+    padding: 4px 10px;
+    font-family: 'Fredoka One', cursive;
+    color: var(--blue);
+    white-space: nowrap;
+  }
+
+  /* DIRECTION CARDS */
+  .direction-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin: 16px 0;
+  }
+
+  .direction-card {
+    background: white;
+    border: 2.5px solid var(--dark);
+    border-radius: 18px;
+    padding: 18px 14px;
+    text-align: center;
+    box-shadow: 4px 4px 0 var(--dark);
+    transition: transform 0.15s, box-shadow 0.15s;
+  }
+
+  .direction-card:hover {
+    transform: translate(-2px, -2px);
+    box-shadow: 6px 6px 0 var(--dark);
+  }
+
+  .direction-arrow { font-size: 2.2em; margin-bottom: 6px; }
+  .direction-french { font-family: 'Fredoka One', cursive; font-size: 1em; color: var(--blue); margin-bottom: 3px; }
+  .direction-pronunciation { font-size: 0.72em; color: #aaa; font-style: italic; margin-bottom: 4px; }
+  .direction-english { font-size: 0.82em; font-weight: 800; }
+
+  /* PACKING LIST */
+  .packing-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin: 16px 0;
+  }
+
+  .pack-item {
+    background: white;
+    border: 2.5px solid var(--dark);
+    border-radius: 14px;
+    padding: 12px 14px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    box-shadow: 3px 3px 0 var(--dark);
+    cursor: pointer;
+    transition: all 0.15s;
+    user-select: none;
+  }
+
+  .pack-item:hover { transform: translate(-1px, -1px); box-shadow: 4px 4px 0 var(--dark); }
+
+  .pack-check {
+    width: 24px;
+    height: 24px;
+    border: 2.5px solid var(--dark);
+    border-radius: 8px;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.9em;
+    background: white;
+    transition: all 0.15s;
+  }
+
+  .pack-item.checked .pack-check { background: var(--orange); border-color: var(--orange); }
+  .pack-item.checked .pack-check::after { content: '✓'; font-weight: 900; color: white; }
+  .pack-item.checked { background: #FFF5EE; }
+
+  .pack-label { font-weight: 800; font-size: 0.88em; display: flex; align-items: center; gap: 6px; }
+
+  /* PASSPORT */
+  .passport-header {
+    text-align: center;
+    background: var(--dark);
+    color: white;
+    border-radius: 16px;
+    padding: 16px;
+    margin-bottom: 24px;
+  }
+
+  .passport-header h2 {
+    font-family: 'Fredoka One', cursive;
+    font-size: 1.5em;
+    letter-spacing: 3px;
+  }
+
+  .passport-header p { font-size: 0.8em; opacity: 0.6; letter-spacing: 2px; text-transform: uppercase; margin-top: 4px; }
+
+  .passport-fields { display: flex; flex-direction: column; gap: 14px; margin-bottom: 24px; }
+
+  .passport-field label {
+    font-size: 0.75em;
+    font-weight: 800;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: #888;
+    display: block;
+    margin-bottom: 4px;
+  }
+
+  .passport-field .field-line {
+    border: none;
+    border-bottom: 2.5px dashed var(--dark);
+    width: 100%;
+    font-family: 'Bubblegum Sans', cursive;
+    font-size: 1.2em;
+    padding: 4px 2px;
+    background: transparent;
+    outline: none;
+    color: var(--dark);
+  }
+
+  .passport-field .field-line::placeholder { color: #ccc; }
+
+  .checklist-title {
+    font-family: 'Fredoka One', cursive;
+    font-size: 1.1em;
+    margin-bottom: 14px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .food-checklist { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 14px; }
+
+  .check-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: white;
+    border: 2.5px solid var(--dark);
+    border-radius: 14px;
+    padding: 10px 14px;
+    cursor: pointer;
+    transition: all 0.15s;
+    box-shadow: 3px 3px 0 var(--dark);
+    user-select: none;
+  }
+
+  .check-item:hover { transform: translate(-1px, -1px); box-shadow: 4px 4px 0 var(--dark); }
+
+  .check-box {
+    width: 24px;
+    height: 24px;
+    border: 2.5px solid var(--dark);
+    border-radius: 8px;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1em;
+    background: white;
+    transition: all 0.15s;
+  }
+
+  .check-item.checked .check-box { background: var(--mint); border-color: var(--mint); }
+  .check-item.checked .check-box::after { content: '✓'; font-weight: 900; color: white; }
+  .check-item.checked { background: #E8FFF8; }
+
+  .check-label { font-family: 'Fredoka One', cursive; font-size: 0.95em; display: flex; align-items: center; gap: 6px; }
+
+  .fill-phrase {
+    background: white;
+    border: 2.5px dashed var(--dark);
+    border-radius: 20px;
+    padding: 20px 24px;
+    text-align: center;
+    margin-top: 14px;
+  }
+
+  .fill-phrase .label {
+    font-size: 0.75em;
+    font-weight: 800;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: #aaa;
+    margin-bottom: 12px;
+  }
+
+  .fill-phrase-text {
+    font-family: 'Fredoka One', cursive;
+    font-size: 1.2em;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+
+  .fill-blank {
+    border: none;
+    border-bottom: 3px solid var(--red);
+    min-width: 140px;
+    font-family: 'Bubblegum Sans', cursive;
+    font-size: 1em;
+    text-align: center;
+    outline: none;
+    background: transparent;
+    color: var(--red);
+    padding: 2px 6px;
+  }
+
+  .fill-blank::placeholder { color: #eee; }
+
+  /* INFO BANNER */
+  .info-banner {
+    background: var(--lavender);
+    border: 2.5px solid var(--dark);
+    border-radius: 16px;
+    padding: 14px 18px;
+    margin: 14px 0;
+    font-size: 0.88em;
+    font-weight: 700;
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    box-shadow: 3px 3px 0 var(--dark);
+  }
+
+  .info-banner .ib-icon { font-size: 1.4em; flex-shrink: 0; }
+
+  .divider { text-align: center; font-size: 1.5em; margin: 24px 0 0; letter-spacing: 8px; opacity: 0.25; }
+
+  /* RESPONSIVE */
+  @media (max-width: 500px) {
+    .food-grid, .rule-grid, .do-dont, .direction-grid, .packing-grid, .food-checklist { grid-template-columns: 1fr; }
+    .food-card:nth-child(5) { grid-column: 1; }
+    .cover h1 { font-size: 2em; }
+    .section { padding: 28px 20px; }
+    .nav-btn { font-size: 0.72em; padding: 6px 12px; }
+  }
+
+  @media print {
+    .section { box-shadow: none; border: 2px solid #ccc; break-inside: avoid; }
+    body::before { display: none; }
+    .nav { display: none; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <!-- NAV -->
+  <nav class="nav">
+    <a class="nav-btn" href="#cover">🏠 Home</a>
+    <a class="nav-btn" href="#about">🌸 About Me</a>
+    <a class="nav-btn" href="#airport">✈️ Airport</a>
+    <a class="nav-btn" href="#food">🥐 Food</a>
+    <a class="nav-btn" href="#packing">🎒 Packing</a>
+    <a class="nav-btn" href="#manners">🎀 Manners</a>
+    <a class="nav-btn" href="#cafe">☕ Café</a>
+    <a class="nav-btn" href="#directions">🗺️ Directions</a>
+    <a class="nav-btn" href="#passport">📘 Passport</a>
+  </nav>
+
+  <!-- COVER -->
+  <div class="section cover" id="cover">
+    <div class="flag">
+      <div class="flag-stripe blue"></div>
+      <div class="flag-stripe white"></div>
+      <div class="flag-stripe red"></div>
+    </div>
+    <h1>
+      <span>Talya's</span>
+      French Food<br>Explorer!
+    </h1>
+    <div class="cover-emojis">✈️ 🥐 🗼 🧀 🥖</div>
+    <div class="bonjour-badge">Bonjour, Talya! 👋</div>
+    <div class="cover-chapters">
+      <div class="cover-chapter-tag">🌸 About Me</div>
+      <div class="cover-chapter-tag">✈️ Airport Phrases</div>
+      <div class="cover-chapter-tag">🥐 French Foods</div>
+      <div class="cover-chapter-tag">🎒 Packing Tips</div>
+      <div class="cover-chapter-tag">🎀 French Manners</div>
+      <div class="cover-chapter-tag">☕ Café Ordering</div>
+      <div class="cover-chapter-tag">🗺️ Directions</div>
+      <div class="cover-chapter-tag">📘 Explorer Passport</div>
+    </div>
+  </div>
+
+  <!-- ABOUT ME -->
+  <div class="section" id="about">
+    <div class="section-title" style="color:#E8394D;">🌸 Meet the Explorer</div>
+    <div class="section-subtitle">C'est moi! — That's me!</div>
+
+    <div class="phrase-card">
+      <div class="phrase-emoji">👧</div>
+      <div class="phrase-content">
+        <div class="phrase-french">Je m'appelle Talya.</div>
+        <div class="phrase-pronunciation">Zhuh mah-pel Tal-ya</div>
+        <div class="phrase-english">My name is Talya.</div>
+      </div>
+    </div>
+    <div class="phrase-card">
+      <div class="phrase-emoji">🎂</div>
+      <div class="phrase-content">
+        <div class="phrase-french">J'ai 9 ans.</div>
+        <div class="phrase-pronunciation">Zhay neuf ahn</div>
+        <div class="phrase-english">I am 9 years old.</div>
+      </div>
+    </div>
+    <div class="phrase-card">
+      <div class="phrase-emoji">💙</div>
+      <div class="phrase-content">
+        <div class="phrase-french">Ma couleur préférée est le bleu.</div>
+        <div class="phrase-pronunciation">Mah koo-lur pray-fay-ray eh luh bluh</div>
+        <div class="phrase-english">My favorite color is blue.</div>
+      </div>
+    </div>
+    <div class="phrase-card">
+      <div class="phrase-emoji">👀</div>
+      <div class="phrase-content">
+        <div class="phrase-french">J'ai les yeux marron et noisette.</div>
+        <div class="phrase-pronunciation">Zhay lay yuh mah-ron ay nwee-zet</div>
+        <div class="phrase-english">I have brown and hazel eyes.</div>
+      </div>
+    </div>
+    <div class="phrase-card">
+      <div class="phrase-emoji">🌍</div>
+      <div class="phrase-content">
+        <div class="phrase-french">J'aime voyager!</div>
+        <div class="phrase-pronunciation">Zhem voy-ah-zhay</div>
+        <div class="phrase-english">I love traveling!</div>
+      </div>
+    </div>
+    <div class="phrase-card">
+      <div class="phrase-emoji">🔭</div>
+      <div class="phrase-content">
+        <div class="phrase-french">Je suis une exploratrice.</div>
+        <div class="phrase-pronunciation">Zhuh sweez oon ex-plor-ah-trees</div>
+        <div class="phrase-english">I am an explorer!</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- AIRPORT -->
+  <div class="section" id="airport">
+    <div class="section-title" style="color:#4A90D9;">✈️ Airport & Adventure Mode</div>
+    <div class="section-subtitle">Tiny Globe-Trotter Phrases</div>
+
+    <div class="phrase-card">
+      <div class="phrase-emoji">🚪</div>
+      <div class="phrase-content">
+        <div class="phrase-french">Où est la porte?</div>
+        <div class="phrase-pronunciation">Oo eh lah port</div>
+        <div class="phrase-english">Where is the gate?</div>
+      </div>
+    </div>
+    <div class="phrase-card">
+      <div class="phrase-emoji">📘</div>
+      <div class="phrase-content">
+        <div class="phrase-french">Voici mon passeport.</div>
+        <div class="phrase-pronunciation">Vwah-see mon pass-por</div>
+        <div class="phrase-english">Here is my passport.</div>
+      </div>
+    </div>
+    <div class="phrase-card">
+      <div class="phrase-emoji">👨‍👩‍👧</div>
+      <div class="phrase-content">
+        <div class="phrase-french">Je voyage avec ma famille.</div>
+        <div class="phrase-pronunciation">Zhuh voy-ahj ah-vek mah fa-mee</div>
+        <div class="phrase-english">I travel with my family.</div>
+      </div>
+    </div>
+    <div class="phrase-card">
+      <div class="phrase-emoji">🛫</div>
+      <div class="phrase-content">
+        <div class="phrase-french">L'avion décolle.</div>
+        <div class="phrase-pronunciation">Lah-vyon day-kol</div>
+        <div class="phrase-english">The plane takes off.</div>
+      </div>
+    </div>
+    <div class="phrase-card">
+      <div class="phrase-emoji">🪟</div>
+      <div class="phrase-content">
+        <div class="phrase-french">Je suis près du hublot.</div>
+        <div class="phrase-pronunciation">Zhuh sweez pray du oo-blo</div>
+        <div class="phrase-english">I sit near the window.</div>
+      </div>
+    </div>
+    <div class="phrase-card">
+      <div class="phrase-emoji">🤩</div>
+      <div class="phrase-content">
+        <div class="phrase-french">C'est excitant!</div>
+        <div class="phrase-pronunciation">Say ek-see-tan</div>
+        <div class="phrase-english">It's exciting!</div>
+      </div>
+    </div>
+    <div class="highlight-phrase">
+      <div class="label">⭐ Most Important Phrase ⭐</div>
+      <div class="french">Merci beaucoup!</div>
+      <div class="pronunciation">Mehr-see boh-koo</div>
+      <div class="english">Thank you very much!</div>
+    </div>
+  </div>
+
+  <!-- FOOD -->
+  <div class="section" id="food">
+    <div class="section-title" style="color:#06D6A0;">🥐 French Food Magic</div>
+    <div class="section-subtitle">Explorer Vocabulary — Les Yummies!</div>
+
+    <div class="food-grid">
+      <div class="food-card">
+        <div class="food-emoji">🥐</div>
+        <div class="food-french">Un croissant</div>
+        <div class="food-pronunciation">Un krwah-sahn</div>
+        <div class="food-english">A croissant</div>
+      </div>
+      <div class="food-card">
+        <div class="food-emoji">🥖</div>
+        <div class="food-french">Une baguette</div>
+        <div class="food-pronunciation">Oon bah-get</div>
+        <div class="food-english">A baguette</div>
+      </div>
+      <div class="food-card">
+        <div class="food-emoji">🍫</div>
+        <div class="food-french">Une crêpe au chocolat</div>
+        <div class="food-pronunciation">Oon krep oh shoh-koh-lah</div>
+        <div class="food-english">A chocolate crepe</div>
+      </div>
+      <div class="food-card">
+        <div class="food-emoji">🍬</div>
+        <div class="food-french">Un macaron</div>
+        <div class="food-pronunciation">Un mah-kah-ron</div>
+        <div class="food-english">A macaron</div>
+      </div>
+      <div class="food-card">
+        <div class="food-emoji">🧀</div>
+        <div class="food-french">Un fromage</div>
+        <div class="food-pronunciation">Un fro-mazh</div>
+        <div class="food-english">A cheese</div>
+      </div>
+    </div>
+
+    <div class="highlight-phrase" style="background:#E8FFF0;">
+      <div class="label">🗣️ How to order like a pro</div>
+      <div class="french">Je voudrais un croissant, s'il vous plaît.</div>
+      <div class="pronunciation">Zhuh voo-dray un krwah-sahn seel voo pleh</div>
+      <div class="english">I would like a croissant, please.</div>
+    </div>
+    <div class="highlight-phrase" style="background:#FFE8FF; margin-top:14px;">
+      <div class="label">😋 After you taste it</div>
+      <div class="french">C'est délicieux!</div>
+      <div class="pronunciation">Say day-lee-syuh</div>
+      <div class="english">It is delicious!</div>
+    </div>
+  </div>
+
+  <!-- PACKING TIPS -->
+  <div class="section" id="packing">
+    <div class="section-title" style="color:#FF8C42;">🎒 Packing Like a Pro</div>
+    <div class="section-subtitle">Explorer Essentials — Don't Forget!</div>
+
+    <div class="info-banner">
+      <div class="ib-icon">💡</div>
+      <div>Tip: Lay everything out on your bed BEFORE you pack — then put half of it back! Less stuff = more room for souvenirs! 🛍️</div>
+    </div>
+
+    <div class="checklist-title">✅ My Packing Checklist — Tap to check off!</div>
+    <div class="packing-grid">
+      <div class="pack-item" onclick="togglePack(this)"><div class="pack-check"></div><div class="pack-label">📘 Passport</div></div>
+      <div class="pack-item" onclick="togglePack(this)"><div class="pack-check"></div><div class="pack-label">🎧 Headphones</div></div>
+      <div class="pack-item" onclick="togglePack(this)"><div class="pack-check"></div><div class="pack-label">📚 Book / activity</div></div>
+      <div class="pack-item" onclick="togglePack(this)"><div class="pack-check"></div><div class="pack-label">🧴 Lip balm</div></div>
+      <div class="pack-item" onclick="togglePack(this)"><div class="pack-check"></div><div class="pack-label">😴 Neck pillow</div></div>
+      <div class="pack-item" onclick="togglePack(this)"><div class="pack-check"></div><div class="pack-label">🧦 Extra socks</div></div>
+      <div class="pack-item" onclick="togglePack(this)"><div class="pack-check"></div><div class="pack-label">🍫 Snacks!</div></div>
+      <div class="pack-item" onclick="togglePack(this)"><div class="pack-check"></div><div class="pack-label">📓 This workbook!</div></div>
+    </div>
+
+    <div class="tip-card">
+      <div class="tip-icon">🧳</div>
+      <div class="tip-content">
+        <div class="tip-title">Roll, don't fold!</div>
+        <div class="tip-text">Rolling your clothes saves space and keeps them wrinkle-free. Try it — it's like magic!</div>
+      </div>
+    </div>
+    <div class="tip-card">
+      <div class="tip-icon">🔋</div>
+      <div class="tip-content">
+        <div class="tip-title">Pack a power bank</div>
+        <div class="tip-text">Long flights can drain your tablet or phone. A portable charger keeps you powered up the whole trip!</div>
+      </div>
+    </div>
+    <div class="tip-card">
+      <div class="tip-icon">🎒</div>
+      <div class="tip-content">
+        <div class="tip-title">Use your carry-on wisely</div>
+        <div class="tip-text">Keep your most important things (passport, headphones, snacks) in your backpack — not in the big suitcase that goes below the plane.</div>
+      </div>
+    </div>
+    <div class="tip-card">
+      <div class="tip-icon">🌡️</div>
+      <div class="tip-content">
+        <div class="tip-title">Check the weather!</div>
+        <div class="tip-text">Paris can be chilly even in spring! Pack one cozy layer just in case. A light jacket = a happy explorer.</div>
+        <div class="tip-french">Il fait froid! (Eel feh frwah) — It is cold!</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MANNERS -->
+  <div class="section" id="manners">
+    <div class="section-title" style="color:#9B59B6;">🎀 French Manners & Étiquette</div>
+    <div class="section-subtitle">How to charm every French person you meet!</div>
+
+    <div class="info-banner" style="background:#F5E6FF; border-color:#C39BD3;">
+      <div class="ib-icon">🌟</div>
+      <div>French people LOVE when visitors try to speak French — even just a little! A <strong>"Bonjour!"</strong> and a smile goes a very long way. 😊</div>
+    </div>
+
+    <div class="rule-grid">
+      <div class="rule-card" style="background:#FFF8E8;">
+        <div class="rule-emoji">👋</div>
+        <div class="rule-title">Always say Bonjour!</div>
+        <div class="rule-text">Greet shopkeepers, waiters, and anyone you meet. It's considered rude to skip the hello!</div>
+      </div>
+      <div class="rule-card" style="background:#E8F8FF;">
+        <div class="rule-emoji">🤫</div>
+        <div class="rule-title">Indoor voices please</div>
+        <div class="rule-text">French people tend to speak quietly in restaurants and cafés. Keep it calm and cozy!</div>
+      </div>
+      <div class="rule-card" style="background:#FFE8F8;">
+        <div class="rule-emoji">🍽️</div>
+        <div class="rule-title">Wait to be seated</div>
+        <div class="rule-text">In France, don't sit down at a restaurant until someone shows you to your table.</div>
+      </div>
+      <div class="rule-card" style="background:#E8FFE8;">
+        <div class="rule-emoji">🙏</div>
+        <div class="rule-title">Say Merci often!</div>
+        <div class="rule-text">Thank people whenever they help you. French people really appreciate politeness!</div>
+      </div>
+    </div>
+
+    <div class="do-dont">
+      <div class="do-box">
+        <div class="box-title">✅ DO</div>
+        <div class="do-item">✓ Say Bonjour when entering a shop</div>
+        <div class="do-item">✓ Say Au revoir when leaving</div>
+        <div class="do-item">✓ Use s'il vous plaît (please)</div>
+        <div class="do-item">✓ Try speaking French, even if it's just a word!</div>
+      </div>
+      <div class="dont-box">
+        <div class="box-title">❌ DON'T</div>
+        <div class="dont-item">✗ Snap fingers at a waiter</div>
+        <div class="dont-item">✗ Talk super loudly in public</div>
+        <div class="dont-item">✗ Eat while walking on the street</div>
+        <div class="dont-item">✗ Forget to smile!</div>
+      </div>
+    </div>
+
+    <div class="highlight-phrase" style="background:#F5E6FF;">
+      <div class="label">🎀 Magic manners words</div>
+      <div class="french">S'il vous plaît — Merci — Excusez-moi — Pardon</div>
+      <div class="pronunciation">Seel voo pleh · Mehr-see · Ex-koo-zay mwah · Par-don</div>
+      <div class="english">Please · Thank you · Excuse me · Sorry</div>
+    </div>
+  </div>
+
+  <!-- CAFÉ ORDERING -->
+  <div class="section" id="cafe">
+    <div class="section-title" style="color:#0ABDE3;">☕ Ordering at a Café</div>
+    <div class="section-subtitle">Talya's guide to café adventures!</div>
+
+    <div class="info-banner" style="background:#E8F8FF; border-color:#AADCF0;">
+      <div class="ib-icon">☕</div>
+      <div>French cafés are magical! You can sit outside, watch people walk by, and eat the yummiest things. Take your time — no one rushes in Paris!</div>
+    </div>
+
+    <div class="menu-card">
+      <div class="menu-card-title">🗣️ What to say — step by step</div>
+      <div class="menu-row">
+        <div>
+          <div class="menu-item-name">Step 1: Walk in & greet!</div>
+          <div class="menu-item-sub">Always say hello first</div>
+        </div>
+        <div class="menu-phrase">Bonjour!</div>
+      </div>
+      <div class="menu-row">
+        <div>
+          <div class="menu-item-name">Step 2: Get the waiter's attention</div>
+          <div class="menu-item-sub">Politely, no snapping!</div>
+        </div>
+        <div class="menu-phrase">Excusez-moi!</div>
+      </div>
+      <div class="menu-row">
+        <div>
+          <div class="menu-item-name">Step 3: Order your food</div>
+          <div class="menu-item-sub">Use je voudrais + your item</div>
+        </div>
+        <div class="menu-phrase">Je voudrais...</div>
+      </div>
+      <div class="menu-row">
+        <div>
+          <div class="menu-item-name">Step 4: Always say please!</div>
+          <div class="menu-item-sub">Add it to the end</div>
+        </div>
+        <div class="menu-phrase">S'il vous plaît.</div>
+      </div>
+      <div class="menu-row">
+        <div>
+          <div class="menu-item-name">Step 5: After you're done</div>
+          <div class="menu-item-sub">Ask for the bill</div>
+        </div>
+        <div class="menu-phrase">L'addition, s'il vous plaît.</div>
+      </div>
+    </div>
+
+    <div class="phrase-card">
+      <div class="phrase-emoji">🥤</div>
+      <div class="phrase-content">
+        <div class="phrase-french">Je voudrais un jus d'orange.</div>
+        <div class="phrase-pronunciation">Zhuh voo-dray un zhoo doh-rahnj</div>
+        <div class="phrase-english">I would like an orange juice.</div>
+      </div>
+    </div>
+    <div class="phrase-card">
+      <div class="phrase-emoji">🍰</div>
+      <div class="phrase-content">
+        <div class="phrase-french">Je voudrais un gâteau, s'il vous plaît.</div>
+        <div class="phrase-pronunciation">Zhuh voo-dray un gah-toh seel voo pleh</div>
+        <div class="phrase-english">I would like a cake, please.</div>
+      </div>
+    </div>
+    <div class="phrase-card">
+      <div class="phrase-emoji">🧾</div>
+      <div class="phrase-content">
+        <div class="phrase-french">L'addition, s'il vous plaît.</div>
+        <div class="phrase-pronunciation">Lah-dee-syon seel voo pleh</div>
+        <div class="phrase-english">The bill, please.</div>
+      </div>
+    </div>
+
+    <div class="highlight-phrase" style="background:#E8FAFF; margin-top:6px;">
+      <div class="label">⭐ Talya's full café sentence!</div>
+      <div class="french">Bonjour! Je voudrais une crêpe au chocolat, s'il vous plaît!</div>
+      <div class="pronunciation">Bon-zhoor! Zhuh voo-dray oon krep oh shoh-koh-lah, seel voo pleh!</div>
+      <div class="english">Hello! I would like a chocolate crepe, please!</div>
+    </div>
+  </div>
+
+  <!-- DIRECTIONS -->
+  <div class="section" id="directions">
+    <div class="section-title" style="color:#E8394D;">🗺️ Getting Around</div>
+    <div class="section-subtitle">Find your way like a true Parisienne!</div>
+
+    <div class="info-banner" style="background:#FFE8E8; border-color:#FFB4B4;">
+      <div class="ib-icon">🗺️</div>
+      <div>If you get lost, don't panic! Find a friendly shopkeeper or a police officer (called <strong>gendarme</strong>) and say: <strong>"Excusez-moi, pouvez-vous m'aider?"</strong> — "Excuse me, can you help me?"</div>
+    </div>
+
+    <div class="direction-grid">
+      <div class="direction-card" style="background:#FFF0E8;">
+        <div class="direction-arrow">⬆️</div>
+        <div class="direction-french">Tout droit</div>
+        <div class="direction-pronunciation">Too drwah</div>
+        <div class="direction-english">Straight ahead</div>
+      </div>
+      <div class="direction-card" style="background:#E8F8FF;">
+        <div class="direction-arrow">⬅️</div>
+        <div class="direction-french">À gauche</div>
+        <div class="direction-pronunciation">Ah gohsh</div>
+        <div class="direction-english">To the left</div>
+      </div>
+      <div class="direction-card" style="background:#F8E8FF;">
+        <div class="direction-arrow">➡️</div>
+        <div class="direction-french">À droite</div>
+        <div class="direction-pronunciation">Ah drwat</div>
+        <div class="direction-english">To the right</div>
+      </div>
+      <div class="direction-card" style="background:#E8FFE8;">
+        <div class="direction-arrow">🔄</div>
+        <div class="direction-french">Tournez!</div>
+        <div class="direction-pronunciation">Toor-nay</div>
+        <div class="direction-english">Turn!</div>
+      </div>
+    </div>
+
+    <div class="phrase-card">
+      <div class="phrase-emoji">❓</div>
+      <div class="phrase-content">
+        <div class="phrase-french">Où est la tour Eiffel?</div>
+        <div class="phrase-pronunciation">Oo eh lah toor Ay-fell</div>
+        <div class="phrase-english">Where is the Eiffel Tower?</div>
+      </div>
+    </div>
+    <div class="phrase-card">
+      <div class="phrase-emoji">🚇</div>
+      <div class="phrase-content">
+        <div class="phrase-french">Où est le métro?</div>
+        <div class="phrase-pronunciation">Oo eh luh may-troh</div>
+        <div class="phrase-english">Where is the subway?</div>
+      </div>
+    </div>
+    <div class="phrase-card">
+      <div class="phrase-emoji">🚻</div>
+      <div class="phrase-content">
+        <div class="phrase-french">Où sont les toilettes?</div>
+        <div class="phrase-pronunciation">Oo son lay twah-let</div>
+        <div class="phrase-english">Where are the bathrooms?</div>
+      </div>
+    </div>
+    <div class="phrase-card">
+      <div class="phrase-emoji">🙋</div>
+      <div class="phrase-content">
+        <div class="phrase-french">Pouvez-vous m'aider?</div>
+        <div class="phrase-pronunciation">Poo-vay voo may-day</div>
+        <div class="phrase-english">Can you help me?</div>
+      </div>
+    </div>
+
+    <div class="tip-card">
+      <div class="tip-icon">🚇</div>
+      <div class="tip-content">
+        <div class="tip-title">Paris has an amazing metro!</div>
+        <div class="tip-text">The Paris subway (le métro) goes almost everywhere! Look for the big "M" signs. It's fast, fun, and very French. 🗼</div>
+      </div>
+    </div>
+    <div class="tip-card">
+      <div class="tip-icon">🗺️</div>
+      <div class="tip-content">
+        <div class="tip-title">Take a photo of your hotel address</div>
+        <div class="tip-text">Before you go out exploring, take a photo of your hotel's name and address. If you get turned around, you can show it to anyone!</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PASSPORT -->
+  <div class="section" style="background: linear-gradient(135deg, #E8E0FF 0%, #FFE8F0 100%) !important;" id="passport">
+    <div class="passport-header">
+      <div style="font-size:2em; margin-bottom:6px;">🌍📘</div>
+      <h2>EXPLORER PASSPORT</h2>
+      <p>Official Talya Explorer Record</p>
+    </div>
+
+    <div class="passport-fields">
+      <div class="passport-field">
+        <label>Name</label>
+        <input class="field-line" type="text" placeholder="Write your name here...">
+      </div>
+      <div class="passport-field">
+        <label>Explorer Signature</label>
+        <input class="field-line" type="text" placeholder="Sign your name in cursive!">
+      </div>
+    </div>
+
+    <div class="checklist-title">🍽️ Foods I Tried — Tap to check off!</div>
+    <div class="food-checklist">
+      <label class="check-item" onclick="toggleCheck(this)"><div class="check-box"></div><div class="check-label">🥐 Un croissant</div></label>
+      <label class="check-item" onclick="toggleCheck(this)"><div class="check-box"></div><div class="check-label">🥖 Une baguette</div></label>
+      <label class="check-item" onclick="toggleCheck(this)"><div class="check-box"></div><div class="check-label">🍫 Une crêpe</div></label>
+      <label class="check-item" onclick="toggleCheck(this)"><div class="check-box"></div><div class="check-label">🍬 Un macaron</div></label>
+    </div>
+    <label class="check-item" onclick="toggleCheck(this)" style="width:fit-content;"><div class="check-box"></div><div class="check-label">🧀 Un fromage</div></label>
+
+    <div class="passport-field" style="margin-top:20px;">
+      <label>My Favorite Food Was</label>
+      <input class="field-line" type="text" placeholder="Which food was your fave? 😋">
+    </div>
+
+    <div class="passport-field" style="margin-top:12px;">
+      <label>My Favorite Place I Visited</label>
+      <input class="field-line" type="text" placeholder="Eiffel Tower? A café? A park?">
+    </div>
+
+    <div class="passport-field" style="margin-top:12px;">
+      <label>One French Word I Learned</label>
+      <input class="field-line" type="text" placeholder="Write your fave new word!">
+    </div>
+
+    <div class="fill-phrase" style="margin-top: 20px;">
+      <div class="label">⭐ Phrase I Can Say in French!</div>
+      <div class="fill-phrase-text">
+        Je voudrais
+        <input class="fill-blank" type="text" placeholder="food here!">
+        .
+      </div>
+      <div style="font-size: 0.8em; color: #aaa; margin-top: 8px; font-style:italic;">
+        (Zhuh voo-dray ___________) — I would like ___________
+      </div>
+    </div>
+
+    <div class="divider">🌸 🥐 🌸 🗼 🌸 🥖 🌸 🧀 🌸</div>
+  </div>
+
+</div>
+
+<script>
+  function toggleCheck(el) { el.classList.toggle('checked'); }
+  function togglePack(el) { el.classList.toggle('checked'); }
+</script>
+</body>
+</html>
