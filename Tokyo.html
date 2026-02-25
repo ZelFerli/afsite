@@ -1,0 +1,675 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tokyo: The Aesthetic & Spa Edition</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Fredoka+One&family=Quicksand:wght@400;600;700&display=swap');
+
+        :root {
+            --sakura-pink: #ffdae9;
+            --spa-teal: #e0f2f1;
+            --matcha-green: #dcedc8;
+            --sky-blue: #e3f2fd;
+            --text-color: #4a4a4a;
+        }
+
+        body { font-family: 'Quicksand', sans-serif; background: #fafafa; color: var(--text-color); margin: 0; }
+        .page { 
+            width: 8.5in; min-height: 11in; padding: 0.6in; margin: 0 auto 40px; 
+            background: white; border: 12px solid var(--sakura-pink); border-radius: 50px;
+            box-sizing: border-box; page-break-after: always; position: relative;
+        }
+
+        h1 { font-family: 'Fredoka One', cursive; font-size: 3.5rem; color: #ff85a2; text-align: center; margin-bottom: 0; }
+        h2 { font-family: 'Fredoka One', cursive; background: var(--sakura-pink); display: inline-block; padding: 5px 20px; border-radius: 15px; margin-bottom: 12px; }
+        h3 { margin: 0 0 8px 0; font-size: 1.1rem; }
+        p { margin: 0 0 8px 0; line-height: 1.6; font-size: 0.95rem; }
+
+        .section-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 14px; }
+        .section-grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px; margin-top: 14px; }
+        .card { background: #fff; border: 2px solid #f0f0f0; border-radius: 20px; padding: 16px; box-shadow: 4px 4px 12px rgba(0,0,0,0.03); }
+        .pink-card { background: #fff5f8; border-color: #ffdae9; }
+        .teal-card { background: #f0fdfa; border-color: #b2f2bb; }
+        .yellow-card { background: #fffde7; border-color: #fff176; }
+        .blue-card { background: #e8f4fd; border-color: #90caf9; }
+        .purple-card { background: #f3e5f5; border-color: #ce93d8; }
+
+        .tag { display: inline-block; background: #eee; padding: 3px 10px; border-radius: 8px; font-size: 0.78rem; font-weight: bold; margin-top: 6px; margin-right: 4px; }
+        .emoji-lg { font-size: 2rem; display: block; margin-bottom: 8px; }
+        .emoji-xl { font-size: 2.5rem; display: block; margin-bottom: 10px; }
+
+        .check-list { list-style: none; padding: 0; margin: 0; }
+        .check-list li { margin-bottom: 8px; font-size: 0.92rem; line-height: 1.5; }
+        .check-list li::before { content: "✨"; margin-right: 8px; }
+
+        .tip-box { background: #fff8e1; border-left: 5px solid #ffd54f; border-radius: 12px; padding: 14px 16px; margin-top: 14px; font-size: 0.9rem; }
+        .tip-box strong { display: block; margin-bottom: 4px; font-size: 1rem; }
+
+        .highlight-strip { background: linear-gradient(135deg, #ffdae9, #e0f2f1); border-radius: 18px; padding: 14px 20px; margin-top: 14px; text-align: center; font-weight: 700; }
+
+        .mini-list { list-style: none; padding: 0; margin: 8px 0 0 0; }
+        .mini-list li { font-size: 0.88rem; padding: 4px 0; border-bottom: 1px dashed #eee; }
+        .mini-list li:last-child { border-bottom: none; }
+        .mini-list li::before { content: "→ "; color: #ff85a2; font-weight: bold; }
+
+        .journal-line { border: none; border-bottom: 2px dashed #f0c0d0; margin: 12px 0; height: 32px; width: 100%; background: transparent; display: block; }
+        .journal-area { border: 2px dashed #f0c0d0; border-radius: 12px; padding: 12px; min-height: 70px; margin-bottom: 12px; color: #ccc; font-style: italic; font-size: 0.88rem; }
+
+        .price-badge { display: inline-block; background: #e8f5e9; color: #388e3c; font-weight: bold; border-radius: 20px; padding: 2px 10px; font-size: 0.82rem; margin-left: 6px; }
+        .hot-badge { display: inline-block; background: #fce4ec; color: #c62828; font-weight: bold; border-radius: 20px; padding: 2px 10px; font-size: 0.82rem; margin-left: 6px; }
+
+        .divider { text-align: center; color: #ffb3cb; font-size: 1.2rem; margin: 12px 0; letter-spacing: 6px; }
+
+        @media print { body { background: none; } .page { margin: 0; box-shadow: none; border-width: 8px; } }
+    </style>
+</head>
+<body>
+
+<!-- PAGE 1: COVER -->
+<div class="page">
+    <div style="text-align:center; padding-top: 80px;">
+        <span style="font-size: 3rem;">🌸 ✨ 🍵</span>
+        <h1>TOKYO AESTHETIC</h1>
+        <p style="font-size: 1.4rem; margin: 0;">The Ultimate Spa, Sushi & Sakura Journal</p>
+        <p style="color: #ff85a2; font-weight: 700; font-size: 1.1rem; margin-top: 6px;">Your personal guide to glowing, eating, and exploring ✨</p>
+
+        <div style="margin-top: 30px; border: 3px dashed var(--sakura-pink); padding: 24px; border-radius: 30px;">
+            <h3 style="font-family: 'Fredoka One', cursive; font-size: 1.3rem; color: #ff85a2;">"The Traveler's Oath"</h3>
+            <p style="font-size: 1rem; margin: 0;">I promise to try one weird snack every day, pet at least one cat (politely), and take 1000 aesthetic photos!</p>
+        </div>
+
+        <div class="section-grid" style="margin-top: 24px;">
+            <div class="card pink-card" style="text-align:left;">
+                <strong>🗓️ My Trip Dates</strong>
+                <div class="journal-line"></div>
+                <strong>✈️ Flying From</strong>
+                <div class="journal-line"></div>
+            </div>
+            <div class="card teal-card" style="text-align:left;">
+                <strong>🏩 Staying At</strong>
+                <div class="journal-line"></div>
+                <strong>🗺️ Neighborhoods I Want to Visit</strong>
+                <div class="journal-line"></div>
+            </div>
+        </div>
+
+        <div class="card yellow-card" style="margin-top: 16px; text-align: left;">
+            <strong style="font-family: 'Fredoka One', cursive; color: #f57f17;">🎯 My Top 3 Must-Dos Before I Leave Tokyo:</strong>
+            <ul class="mini-list" style="margin-top: 10px;">
+                <li style="padding: 8px 0; border-bottom: 1px dashed #eee;">_______________________________</li>
+                <li style="padding: 8px 0; border-bottom: 1px dashed #eee;">_______________________________</li>
+                <li style="padding: 8px 0;">_______________________________</li>
+            </ul>
+        </div>
+
+        <div class="highlight-strip" style="margin-top: 16px;">
+            💴 Budget Tip: ¥1,000 = ~$7 USD · Carry cash, many small shops are cash-only!
+        </div>
+    </div>
+</div>
+
+<!-- PAGE 2: SPA & GLOW GUIDE -->
+<div class="page" style="border-color: var(--spa-teal);">
+    <h2>🧖‍♀️ The Spa & Glow Guide</h2>
+    <p>Japanese self-care is all about "O-mote-nashi" (hospitality). Treat yourself — you deserve it!</p>
+
+    <div class="section-grid">
+        <div class="card teal-card">
+            <span class="emoji-lg">🦶</span>
+            <h3>Ashiyu Cafes (Foot Spas!)</h3>
+            <p>In neighborhoods like <b>Ueno</b>, you can find cafes where you soak your feet in a hot spring tub while drinking matcha latte! The water is naturally heated and mineral-rich — perfect for tired walking feet.</p>
+            <p><b>💡 Tip:</b> Bring a small towel and wear easy-off shoes or sandals!</p>
+            <span class="tag">#FootSpa</span> <span class="tag">#Relaxation</span>
+        </div>
+        <div class="card teal-card">
+            <span class="emoji-lg">💆‍♀️</span>
+            <h3>Gokuraku-yu (Super Sento)</h3>
+            <p>It's like a water park for relaxation! Try the <b>"Soda Bath"</b> (it tingles like carbonation on your skin!), the <b>"Sulfur Bath"</b> for soft skin, or the <b>"Jet Bed"</b> where you float on water jets.</p>
+            <p><b>💡 Tip:</b> Tattoos are sometimes not allowed — check ahead online.</p>
+            <span class="tag">#OnsenVibes</span> <span class="tag">#MustTry</span>
+        </div>
+    </div>
+
+    <div class="section-grid" style="margin-top: 14px;">
+        <div class="card blue-card">
+            <span class="emoji-lg">🌿</span>
+            <h3>The Head Spa Trend</h3>
+            <p>Tokyo has exploded with "head spas" — a deeply relaxing scalp treatment that lasts 30–60 mins. Stylists massage your scalp, steam your hair, and use special oils. It's pure bliss!</p>
+            <p><b>Where to look:</b> Search "ヘッドスパ" on Google Maps in Shinjuku or Shibuya.</p>
+        </div>
+        <div class="card purple-card">
+            <span class="emoji-lg">🛁</span>
+            <h3>Koiwai Farm Hotel Bath</h3>
+            <p>Some ryokans (traditional inns) even near Tokyo have private baths called <b>"kashikiri onsen"</b> — you rent the entire bath for yourself or your group! Pure luxury.</p>
+            <p><b>💡 Tip:</b> Book in advance — these fill up fast!</p>
+        </div>
+    </div>
+
+    <div class="card" style="margin-top: 16px;">
+        <h3>🛍️ J-Beauty Scavenger Hunt — Go to <b>Matsumoto Kiyoshi</b> or <b>Sundrug</b> stores!</h3>
+        <div class="section-grid">
+            <ul class="check-list">
+                <li><b>Hada Labo Gokujyun Lotion:</b> The "Holy Grail" of Japanese skincare. Mega-hydration in a bottle. Get the pink cap (light) or blue cap (extra)!</li>
+                <li><b>Canmake Marshmallow Finish Powder:</b> Cult-favorite setting powder for a soft, airbrushed look. Only ~¥700!</li>
+                <li><b>DHC Lip Cream:</b> The best drugstore lip balm in Japan. Stock up — friends will BEG you for one.</li>
+            </ul>
+            <ul class="check-list">
+                <li><b>Biore UV Aqua Rich Sunscreen:</b> The most beloved sunscreen in Asia. Watery texture, no white cast, perfect under makeup.</li>
+                <li><b>Peach Leaf Bath Salts:</b> Make your hotel tub smell like a sakura garden. Perfect souvenir for yourself!</li>
+                <li><b>Lululun Face Masks:</b> A big colorful box of daily face masks for ¥1,000. Try the "Hokkaido Rose" edition!</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="tip-box">
+        <strong>🌸 Japanese Skincare Philosophy: "Mochi Skin"</strong>
+        The goal of Japanese beauty is "mochi hada" — skin as soft and bouncy as a rice cake. It's all about hydration layering: lotion → essence → serum → moisturizer. Less makeup, more glow!
+    </div>
+</div>
+
+<!-- PAGE 3: BAKERIES & CAFES -->
+<div class="page" style="border-color: var(--matcha-green);">
+    <h2>🥐 Trendy Bakeries, Cafes & Sweet Treats</h2>
+    <p>Tokyo bakeries are famous for being <b>"too pretty to eat"</b> — but you absolutely should eat them.</p>
+
+    <div class="section-grid">
+        <div class="card" style="border-color: #dcedc8;">
+            <span class="emoji-lg">🥐</span>
+            <h3>Truffle Mini (Shio-Pan Bakery)</h3>
+            <p>The legendary <b>"Salt Bread" (Shio-pan)</b> — buttery, salty, and shaped like a crescent. People line up for HOURS. Go at opening time (usually 7am). They also do truffle cream puffs!</p>
+            <span class="tag">#WorthTheWait</span>
+        </div>
+        <div class="card" style="border-color: #dcedc8;">
+            <span class="emoji-lg">🪵</span>
+            <h3>Shiro-Hige's Cream Puff Factory</h3>
+            <p>The <b>only</b> bakery authorized to make cream puffs shaped like <b>Totoro!</b> Hidden in a quiet, leafy neighborhood (Setagaya). Cream puff flavors rotate seasonally — spring means sakura!</p>
+            <span class="tag">#Totoro</span> <span class="tag">#HiddenGem</span>
+        </div>
+    </div>
+
+    <div class="section-grid" style="margin-top: 14px;">
+        <div class="card yellow-card">
+            <span class="emoji-lg">🍡</span>
+            <h3>Harajuku Takeshita Street Treats</h3>
+            <p>The OG of Tokyo sweet chaos! Try the <b>Rainbow Cotton Candy</b>, <b>Crepes stuffed with matcha ice cream</b>, and the wild <b>Monster Milkshakes</b>. Budget ~¥500–¥1,500 per treat.</p>
+            <ul class="mini-list">
+                <li>Marion Crepes — the original since 1976!</li>
+                <li>Totti Candy Factory (rainbow cotton candy)</li>
+                <li>Egg 'n Things for fluffy pancakes</li>
+            </ul>
+        </div>
+        <div class="card pink-card">
+            <span class="emoji-lg">🍵</span>
+            <h3>Matcha Everything!</h3>
+            <p>Tokyo has elevated matcha to an art form. Don't leave without trying:</p>
+            <ul class="mini-list">
+                <li><b>Nana's Green Tea</b> — matcha tiramisu 🤤</li>
+                <li><b>Itohkyuemon</b> — 100% pure matcha soft serve</li>
+                <li><b>% Arabica (Omotesando)</b> — the most aesthetic coffee shop</li>
+                <li>Matcha latte in a vending machine (yes, really!)</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="card" style="margin-top:14px; background: #f9fbe7; border-color: #dcedc8;">
+        <h3>📍 Nakameguro Starbucks Reserve Roastery</h3>
+        <p>Widely called <b>"the most beautiful Starbucks in the world."</b> Four floors, a tea room with rare loose-leaf teas, cocktail bar, and a terrace that overlooks the canal lined with sakura trees. Not your average PSL situation. Plan to spend an hour here — there are cozy nooks on every floor!</p>
+        <p><b>💡 Pro Tip:</b> The line to get in can be 30 mins on weekends. Visit on a weekday morning!</p>
+        <span class="tag">#Aesthetic</span> <span class="tag">#MustVisit</span> <span class="tag">#CanalViews</span>
+    </div>
+
+    <div class="tip-box">
+        <strong>🍞 Bakery Culture Tip: The Morning Hunt</strong>
+        Japanese bakeries ("pan-ya") often sell out by noon! The trick is to grab a tray and tongs at the door, load up like you're at a buffet, and pay at the end. It's a fun ritual — no menu needed, just point at what looks good!
+    </div>
+</div>
+
+<!-- PAGE 4: STATIONERY HEAVEN -->
+<div class="page" style="border-color: var(--sky-blue);">
+    <h2>🖋️ Stationery & Sticker Heaven</h2>
+    <p>If you love pens, journals, washi tape, and stickers — you might need to buy an extra suitcase.</p>
+
+    <div class="card" style="margin-bottom: 14px; border-left: 10px solid #64b5f6;">
+        <h3>Itoya Ginza 🏢 <span class="price-badge">12 Floors!</span></h3>
+        <p>The ultimate stationery destination. One whole floor is just for paper — Japanese "washi" paper in hundreds of textures and colors. You can design your own custom notebook at their "Ginza Planner" bar. The basement has fresh flowers. The rooftop has a garden. It's incredible.</p>
+        <p><b>💡 Don't miss:</b> The "Traveler's Note" section on floor 6 and the gorgeous Japanese ink sets on floor 4.</p>
+        <span class="tag">#StatNerd</span> <span class="tag">#GinzaGems</span>
+    </div>
+
+    <div class="card" style="margin-bottom: 14px; border-left: 10px solid #64b5f6;">
+        <h3>Tokyu Hands (Now called "Hands") 🎨</h3>
+        <p>Think of it as a craft store that exploded in the best way. Go to the <b>"DIY and Hobby" floors</b> — they have stickers of every cat breed, food item, celebrity face, and Japanese sign imaginable. Also incredible for: washi tape, rubber stamps, calligraphy supplies, and weird gadgets you didn't know you needed.</p>
+        <p><b>💡 Secret weapon:</b> The store map is on a card at the entrance — grab one or you'll be wandering for hours (not necessarily a bad thing).</p>
+        <span class="tag">#WashiTapeHeaven</span> <span class="tag">#MustBrowse</span>
+    </div>
+
+    <div class="card" style="margin-bottom: 14px; border-left: 10px solid #64b5f6;">
+        <h3>Traveler's Factory (Nakameguro) ✈️</h3>
+        <p>A tiny magical shop inside an old paper factory building. It's THE home of the iconic <b>"Traveler's Notebook"</b> — a handstitched leather journal with removable inserts. It feels like a secret club for people who love to travel and write. The staff stamps your notebook with the date of your visit!</p>
+        <p><b>💡 Limited editions:</b> They release Tokyo-exclusive refills you literally can't get anywhere else on Earth.</p>
+    </div>
+
+    <div class="section-grid">
+        <div class="card teal-card">
+            <span class="emoji-lg">🖊️</span>
+            <h3>Kinokuniya Bookstore</h3>
+            <p>The flagship in Shinjuku has a whole floor dedicated to <b>art books, journals, and premium stationery</b>. Perfect for design-lovers. They also carry English books!</p>
+        </div>
+        <div class="card pink-card">
+            <span class="emoji-lg">🎁</span>
+            <h3>¥100 Daiso Finds</h3>
+            <p>Don't sleep on <b>Daiso</b> (Japan's 100-yen store)! They stock adorable sticker sheets, mini notebooks, washi tape sets, and stamp pads for just ¥110 each. Best souvenir value in Tokyo!</p>
+        </div>
+    </div>
+
+    <div class="tip-box">
+        <strong>✏️ What to Buy for Friends Back Home</strong>
+        A curated stationery gift box from Tokyo is the ultimate thoughtful souvenir! Aim for: 1 pack washi tape, 1 set of gel pens (Muji or Pilot Juice), a few sticker sheets, and a small decorative clip or charm. Total cost: ~¥1,500. Priceless reaction guaranteed.
+    </div>
+</div>
+
+<!-- PAGE 5: CATS -->
+<div class="page" style="border-color: #f0e0f0;">
+    <h2>🐱 The Cat-Lover's Complete Guide</h2>
+    <p>Tokyo takes its cat obsession seriously — from roaming street cats to museum exhibitions!</p>
+
+    <div class="section-grid">
+        <div class="card">
+            <span class="emoji-lg">😻</span>
+            <h3>Cat Cafe Mocha <span class="hot-badge">Most Popular</span></h3>
+            <p>The most "Instagrammable" cat cafe in Tokyo. Birdcage-style hanging seats, massive wooden climbing trees, and over 20 cats of different breeds. Drinks included with your admission. Book online in advance — they fill up fast on weekends!</p>
+            <p><b>Price:</b> ~¥1,500 for 30 mins (includes one drink)</p>
+            <span class="tag">#CatCafe</span>
+        </div>
+        <div class="card">
+            <span class="emoji-lg">🏘️</span>
+            <h3>Yanaka Ginza — "Cat Town"</h3>
+            <p>An old Showa-era shopping street where <b>real cats roam freely</b> like they own the place (they do). Every shop sells cat-shaped snacks — try the <b>cat-tail donuts ("nekoze donut")</b>! Also home to adorable handmade cat goods from local artists.</p>
+            <p><b>Best time to visit:</b> Late afternoon — that's when the cats come out to watch the sunset.</p>
+        </div>
+    </div>
+
+    <div class="section-grid" style="margin-top: 14px;">
+        <div class="card purple-card">
+            <span class="emoji-lg">🎭</span>
+            <h3>Gotokuji Temple (The Lucky Cat Temple!)</h3>
+            <p>This is where the <b>"Maneki-neko"</b> (beckoning lucky cat) was born! The temple grounds are filled with hundreds of ceramic lucky cats donated by visitors. It's magical, photogenic, and deeply peaceful. Located in Setagaya.</p>
+            <p><b>💡 Tip:</b> You can buy a small ceramic cat to leave as an offering!</p>
+        </div>
+        <div class="card teal-card">
+            <span class="emoji-lg">🛍️</span>
+            <h3>Cat Shopping Spots</h3>
+            <p>Where to find the best cat merchandise:</p>
+            <ul class="mini-list">
+                <li><b>Nekobukuro</b> (in Ikebukuro Tokyu Hands) — rooftop cat area + cat gift shop</li>
+                <li><b>Shimokitazawa</b> vintage shops — hand-painted cat tote bags</li>
+                <li><b>Harajuku Laforet</b> — cat-themed fashion accessories</li>
+                <li><b>Any Don Quijote</b> — cat plushies of every size and breed</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="card" style="margin-top: 14px; background: #eceff1;">
+        <h3>💡 Cat Cafe Etiquette — The Golden Rules!</h3>
+        <div class="section-grid">
+            <ul class="check-list">
+                <li>Do NOT pick up the cats — let them come to you. Patience is rewarded!</li>
+                <li>Swap your shoes for the provided slippers at the door — always!</li>
+                <li>Photos are okay, but absolutely NO flash photography.</li>
+            </ul>
+            <ul class="check-list">
+                <li>Wash your hands before AND after — they usually have a sanitizing station.</li>
+                <li>Don't wake sleeping cats, no matter how cute they look.</li>
+                <li>Keep voices soft and low — the cats appreciate calm energy.</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="tip-box">
+        <strong>🐾 The Secret to Getting Cats to Come to You</strong>
+        Sit very still on the floor or a low seat. Look away from the cat (direct eye contact feels threatening to them). Hold out one relaxed hand, palm down, at floor level. Within a few minutes, curiosity wins every time. Slow blink at them — that's how cats say "I love you"!
+    </div>
+</div>
+
+<!-- PAGE 6: SAKURA -->
+<div class="page" style="border-color: #ffb3cb;">
+    <h2>🌸 The Pink List: Sakura Season Guide</h2>
+    <p>Sakura (cherry blossom) season is magical but SHORT — usually <b>late March to mid-April</b>. Plan around it!</p>
+
+    <div class="section-grid">
+        <div class="card pink-card">
+            <h3>🛶 Inokashira Park (Kichijoji)</h3>
+            <p>Rent a swan boat and float under the blooms! The trees hang SO low over the water that petals literally fall into your lap. One of the most romantic spots in all of Tokyo. Arrive early — boat rental lines get long by 10am.</p>
+            <p><b>💡 Bonus:</b> The Ghibli Museum is a 5-min walk away!</p>
+            <span class="tag">#SwanBoat</span> <span class="tag">#MostRomantic</span>
+        </div>
+        <div class="card pink-card">
+            <h3>🧺 Yoyogi Park</h3>
+            <p>The best spot for people-watching under the blossoms. On weekends you'll see synchronized dancers, elaborate picnics, dogs in strollers, and groups of friends doing karaoke under the trees. Pure Tokyo joy. Bring a tarp and snacks!</p>
+            <p><b>💡 Tip:</b> Blue tarps are reserved with GREAT seriousness — never step on someone's tarp!</p>
+            <span class="tag">#PicnicVibes</span>
+        </div>
+    </div>
+
+    <div class="section-grid" style="margin-top: 14px;">
+        <div class="card blue-card">
+            <h3>🌙 Chidorigafuchi (Moat Walk)</h3>
+            <p>The famous <b>nighttime sakura</b> (yozakura) walk! The moat around the Imperial Palace is lit up at night, reflecting pink blossoms in the dark water below. It's absolutely breathtaking. Best visited after 7pm when the crowd thins slightly.</p>
+        </div>
+        <div class="card yellow-card">
+            <h3>🏯 Shinjuku Gyoen</h3>
+            <p>A large, manicured national garden with MULTIPLE varieties of cherry blossoms that bloom at slightly different times — meaning the season lasts longer here! Also one of the few parks where you can drink alcohol under the trees (BYO sake!).</p>
+        </div>
+    </div>
+
+    <div class="card" style="margin-top: 14px;">
+        <h3>🍦 Sakura Flavors: Everything to Try This Season</h3>
+        <div class="section-grid">
+            <ul class="check-list">
+                <li><b>Sakura Soft Serve:</b> Tastes like floral vanilla with a pink swirl. Find at konbini or specialty dessert shops.</li>
+                <li><b>Sakura Latte:</b> Starbucks and Tully's release limited seasonal sakura lattes every spring — GET THEM!</li>
+                <li><b>Sakura Mochi:</b> Pink rice cake wrapped in a pickled cherry leaf. The leaf is edible and gives a unique salty-sweet flavor.</li>
+            </ul>
+            <ul class="check-list">
+                <li><b>Sakura Kit-Kats:</b> The perfect souvenir! Also try: matcha, wasabi, sake, and sweet potato flavors.</li>
+                <li><b>Hanami Bento:</b> Convenience stores release special spring bento boxes around sakura season — colorful, delicious, ~¥600!</li>
+                <li><b>Sakura Cream Bread:</b> Lawson's seasonal cherry blossom-filled bread bun is legendary. Check daily — sells out fast.</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="tip-box">
+        <strong>📱 Track the Blooms!</strong>
+        Use the app "Sakura Navi" or check the Japan Meteorological Corporation's "cherry blossom forecast" online. The bloom moves north from Kyushu to Hokkaido — Tokyo usually peaks in late March or early April. Being there at full bloom (mankai) vs. 50% bloom is a totally different experience!
+    </div>
+</div>
+
+<!-- PAGE 7: SUSHI & FOOD -->
+<div class="page" style="border-color: #ffccbc;">
+    <h2>🍣 Sushi, Ramen & Street Food Bible</h2>
+    <p>Tokyo has more Michelin-starred restaurants than any other city on Earth — but some of the best food costs under ¥1,000!</p>
+    
+    <div class="section-grid">
+        <div class="card" style="border-left: 6px solid #ff7043;">
+            <span class="emoji-lg">🐟</span>
+            <h3>Tsukiji Outer Market</h3>
+            <p>Don't let anyone tell you the inner market closing ruined Tsukiji — the <b>outer market</b> is still incredible! Get there by 8am for the freshest experience. Must-eats:</p>
+            <ul class="mini-list">
+                <li>Grilled wagyu beef on a stick (~¥500)</li>
+                <li>Strawberry mochi daifuku (~¥200 each)</li>
+                <li>Rolled omelet Tamagoyaki — try it fresh from the pan!</li>
+                <li>Uni (sea urchin) on a spoon — if you're adventurous!</li>
+            </ul>
+        </div>
+        <div class="card" style="border-left: 6px solid #ff7043;">
+            <span class="emoji-lg">🍣</span>
+            <h3>Hanamaru Sushi (Ginza / Shinjuku)</h3>
+            <p>"Standing sushi" (kaiten-zushi) from Hokkaido. Ultra fresh and surprisingly affordable. Each plate is ¥110–¥330 on the belt!</p>
+            <p><b>Order these specifically:</b></p>
+            <ul class="mini-list">
+                <li>Seared salmon with cheese (Japan-only!)</li>
+                <li>Ootoro (fatty tuna) — splurge on it here</li>
+                <li>Ikura (salmon roe) gunkan — it pops!</li>
+                <li>Tamago (egg) sushi — sweet and soft</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="section-grid" style="margin-top: 14px;">
+        <div class="card teal-card">
+            <span class="emoji-lg">🍜</span>
+            <h3>Ramen 101 — Pick Your Style</h3>
+            <p>Each region has its own ramen! In Tokyo:</p>
+            <ul class="mini-list">
+                <li><b>Shoyu (soy sauce):</b> Classic Tokyo style, clear broth, punchy</li>
+                <li><b>Tonkotsu:</b> Rich creamy pork bone broth (Fuunji, Shinjuku)</li>
+                <li><b>Tsukemen:</b> Dipping noodles! Noodles on the side, dip into thick broth</li>
+                <li><b>Tantanmen:</b> Spicy sesame noodle soup</li>
+            </ul>
+            <p><b>💡 Tip:</b> Most ramen shops use a ticket machine at the door. Point at pictures!</p>
+        </div>
+        <div class="card yellow-card">
+            <span class="emoji-lg">🥟</span>
+            <h3>Street Food & Konbini Finds</h3>
+            <p>Never underestimate 7-Eleven! Japan's konbini are a whole experience:</p>
+            <ul class="mini-list">
+                <li>Onigiri (rice balls) — get the tuna mayo flavor first</li>
+                <li>Egg salad sandwiches — life-changing</li>
+                <li>Oden in winter (hot pot from a warm tank!)</li>
+                <li>Chicken karaage from the hot food counter</li>
+                <li>The ice cream section — every visit is a new discovery</li>
+            </ul>
+        </div>
+    </div>
+
+    <div style="margin-top: 14px; padding: 16px; background: #fff8e1; border-radius: 20px;">
+        <strong style="font-family: 'Fredoka One', cursive; font-size: 1.1rem;">🥢 Chopstick & Dining Etiquette — Know Before You Go!</strong>
+        <div class="section-grid" style="margin-top: 10px;">
+            <ul class="check-list">
+                <li>Never pass food from chopsticks to chopsticks — it mimics a funeral ritual!</li>
+                <li>Don't stick chopsticks upright in rice — also a funeral symbol.</li>
+                <li>Slurping noodles is a <b>compliment</b> — go for it!</li>
+            </ul>
+            <ul class="check-list">
+                <li>Say "Itadakimasu" before eating — it means "I humbly receive this meal."</li>
+                <li>Tipping is NOT done in Japan — it can actually be seen as rude.</li>
+                <li>When the server brings the bill, you pay at the register, not at the table.</li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<!-- PAGE 8: NEIGHBORHOODS -->
+<div class="page" style="border-color: #b3e5fc;">
+    <h2>🗺️ Neighborhood Personality Guide</h2>
+    <p>Tokyo's neighborhoods each have a completely distinct vibe — here's the cheat sheet!</p>
+
+    <div class="section-grid">
+        <div class="card pink-card">
+            <h3>🎀 Harajuku</h3>
+            <p><b>Vibe:</b> Wild fashion, youth culture, iconic street food</p>
+            <ul class="mini-list">
+                <li>Takeshita Street for crepes & cotton candy</li>
+                <li>Ura-Harajuku for vintage & indie designers</li>
+                <li>Omotesando for luxury shopping & % Arabica coffee</li>
+                <li>Cat Street for cool boutiques and street art</li>
+            </ul>
+            <span class="tag">#Fashion</span> <span class="tag">#Kawaii</span>
+        </div>
+        <div class="card blue-card">
+            <h3>🌃 Shinjuku</h3>
+            <p><b>Vibe:</b> Neon lights, massive department stores, nightlife</p>
+            <ul class="mini-list">
+                <li>Kabukicho for the famous neon Godzilla head!</li>
+                <li>Golden Gai — tiny bars with 5 seats each</li>
+                <li>Omoide Yokocho (Memory Lane) for yakitori under the trains</li>
+                <li>Free observation deck at Tokyo Metropolitan Gov. Building</li>
+            </ul>
+            <span class="tag">#Nightlife</span> <span class="tag">#Foodie</span>
+        </div>
+    </div>
+
+    <div class="section-grid" style="margin-top: 14px;">
+        <div class="card teal-card">
+            <h3>🌿 Shimokitazawa</h3>
+            <p><b>Vibe:</b> Bohemian, indie music, vintage fashion, coffee</p>
+            <ul class="mini-list">
+                <li>Best vintage clothing shops in all of Tokyo</li>
+                <li>Tiny live music venues down every alley</li>
+                <li>Incredible brunch cafe culture</li>
+                <li>"Bonus Track" — an outdoor market street with indie shops</li>
+            </ul>
+            <span class="tag">#Vintage</span> <span class="tag">#IndieCool</span>
+        </div>
+        <div class="card yellow-card">
+            <h3>🏮 Asakusa</h3>
+            <p><b>Vibe:</b> Traditional, historic, Senso-ji Temple, craft shopping</p>
+            <ul class="mini-list">
+                <li>Senso-ji Temple — go at dawn before crowds arrive</li>
+                <li>Nakamise shopping street for traditional sweets & souvenirs</li>
+                <li>Rent a kimono and walk the old streets!</li>
+                <li>Rickshaw rides available for ~¥3,000</li>
+            </ul>
+            <span class="tag">#Traditional</span> <span class="tag">#Historic</span>
+        </div>
+    </div>
+
+    <div class="section-grid" style="margin-top: 14px;">
+        <div class="card purple-card">
+            <h3>🎮 Akihabara</h3>
+            <p><b>Vibe:</b> Anime, manga, electronics, gaming</p>
+            <ul class="mini-list">
+                <li>Multi-floor arcades — try the UFO catcher machines!</li>
+                <li>Animate for anime merch & manga</li>
+                <li>Maid cafes (staff in maid outfits, ~¥1,000 cover)</li>
+                <li>Retro game shops — find old Gameboy cartridges!</li>
+            </ul>
+            <span class="tag">#Anime</span> <span class="tag">#Gamer</span>
+        </div>
+        <div class="card" style="border-color: #cfd8dc;">
+            <h3>☕ Nakameguro</h3>
+            <p><b>Vibe:</b> Sophisticated, canal walks, designer boutiques, coffee</p>
+            <ul class="mini-list">
+                <li>Canal walk lined with boutiques and cafes</li>
+                <li>Starbucks Reserve Roastery</li>
+                <li>Traveler's Factory stationery shop</li>
+                <li>Best neighborhood for sakura season walks</li>
+            </ul>
+            <span class="tag">#Aesthetic</span> <span class="tag">#Peaceful</span>
+        </div>
+    </div>
+
+    <div class="tip-box">
+        <strong>🚇 Getting Around Like a Local</strong>
+        Get a <b>Suica or Pasmo IC card</b> at any airport or train station — tap in and out of trains, buses, AND pay at konbinis with it! The Tokyo Metro is the cleanest, most punctual transit system in the world. Trains arrive literally to the second. Download "Google Maps" or "Japan Official Travel App" for navigation.
+    </div>
+</div>
+
+<!-- PAGE 9: JOURNAL / MEMORIES -->
+<div class="page">
+    <h2>📓 My Tokyo Memory Pages</h2>
+    <p>Fill these in as you go! Future you will be SO grateful.</p>
+
+    <div class="section-grid">
+        <div style="border: 2px dashed #f0c0d0; min-height: 160px; border-radius: 20px; display: flex; align-items: center; justify-content: center; color: #ddd; flex-direction: column; gap: 8px; font-style: italic;">
+            <span style="font-size: 2rem;">📸</span>
+            Postcard or Photo Here
+        </div>
+        <div style="border: 2px dashed #b2dfdb; min-height: 160px; border-radius: 20px; display: flex; align-items: center; justify-content: center; color: #ddd; flex-direction: column; gap: 8px; font-style: italic;">
+            <span style="font-size: 2rem;">🎫</span>
+            Train Ticket / Receipt / Sticker
+        </div>
+    </div>
+
+    <div style="margin-top: 20px;">
+        <p><b>Today's Date & Neighborhood Explored:</b></p>
+        <div class="journal-line"></div>
+        <p><b>🍜 Best Thing I Ate (+ where I got it!):</b></p>
+        <div class="journal-line"></div>
+        <p><b>😻 Cutest/Weirdest/Funniest Thing I Saw:</b></p>
+        <div class="journal-line"></div>
+        <p><b>🌸 Today's Favorite Smell (matcha? incense? rain on pavement?):</b></p>
+        <div class="journal-line"></div>
+        <p><b>🛍️ What I Bought (and the price in yen):</b></p>
+        <div class="journal-line"></div>
+        <p><b>💬 Japanese Word or Phrase I Learned:</b></p>
+        <div class="journal-line"></div>
+    </div>
+
+    <div class="card yellow-card" style="margin-top: 16px;">
+        <strong style="font-family: 'Fredoka One', cursive;">🌟 3 Things That Made Today in Tokyo Special:</strong>
+        <div class="journal-area" style="margin-top: 10px;">1. _____________________________________</div>
+        <div class="journal-area">2. _____________________________________</div>
+        <div class="journal-area">3. _____________________________________</div>
+    </div>
+</div>
+
+<!-- PAGE 10: QUICK REFERENCE & PHRASES -->
+<div class="page" style="border-color: #dcedc8;">
+    <h2>📱 Quick Reference & Survival Phrases</h2>
+
+    <div class="section-grid">
+        <div class="card teal-card">
+            <h3>🗣️ Essential Japanese Phrases</h3>
+            <ul class="mini-list" style="font-size: 0.92rem;">
+                <li><b>Sumimasen</b> — Excuse me / Sorry</li>
+                <li><b>Arigatou gozaimasu</b> — Thank you very much</li>
+                <li><b>Ikura desu ka?</b> — How much is this?</li>
+                <li><b>Kore wo kudasai</b> — I'll take this one, please</li>
+                <li><b>Doko desu ka?</b> — Where is ___?</li>
+                <li><b>Toire wa doko?</b> — Where's the bathroom?</li>
+                <li><b>Itadakimasu!</b> — Said before eating ("I receive")</li>
+                <li><b>Oishii!</b> — Delicious!</li>
+                <li><b>Kawaii!</b> — Cute!</li>
+                <li><b>Eigo wa hanasemasu ka?</b> — Do you speak English?</li>
+            </ul>
+        </div>
+        <div class="card pink-card">
+            <h3>💴 Handy Price Reference</h3>
+            <ul class="mini-list">
+                <li>Vending machine drink: ¥130–¥180</li>
+                <li>Onigiri (rice ball) at konbini: ¥120–¥180</li>
+                <li>Ramen bowl: ¥800–¥1,200</li>
+                <li>Kaiten sushi plate: ¥110–¥330</li>
+                <li>Cat cafe entry (1hr): ¥1,500–¥2,000</li>
+                <li>Harajuku crepe: ¥500–¥800</li>
+                <li>Train ride (one zone): ¥170–¥200</li>
+                <li>Drugstore face mask: ¥100–¥300</li>
+                <li>Daiso (everything): ¥110</li>
+                <li>Themed Kit-Kats (per box): ¥400–¥600</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="section-grid" style="margin-top: 14px;">
+        <div class="card blue-card">
+            <h3>📲 Apps to Download Before You Go</h3>
+            <ul class="mini-list">
+                <li><b>Google Maps</b> — works incredibly well in Tokyo</li>
+                <li><b>Google Translate</b> — use camera mode on menus!</li>
+                <li><b>Hyperdia</b> — train route planning</li>
+                <li><b>Tabelog</b> — Japanese restaurant reviews</li>
+                <li><b>PayPay</b> — mobile payment app accepted widely</li>
+                <li><b>NHK World</b> — English-language Japan news</li>
+            </ul>
+        </div>
+        <div class="card yellow-card">
+            <h3>⚠️ Things NOT to Do in Tokyo</h3>
+            <ul class="mini-list">
+                <li>Don't eat while walking (bad manners!)</li>
+                <li>Don't talk on your phone on the train</li>
+                <li>Don't tip at restaurants or cafes</li>
+                <li>Don't jaywalk — people really don't!</li>
+                <li>Don't litter (there are barely any trash cans — carry a bag!)</li>
+                <li>Don't point at people with your finger</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="card" style="margin-top: 14px; text-align: center; background: linear-gradient(135deg, #fff5f8, #e0f2f1);">
+        <h3 style="font-family: 'Fredoka One', cursive; color: #ff85a2; font-size: 1.5rem;">My Tokyo Bucket List Checklist</h3>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 4px; text-align: left; margin-top: 10px;">
+            <div style="font-size: 0.88rem; padding: 4px;">☐ Visit a cat cafe</div>
+            <div style="font-size: 0.88rem; padding: 4px;">☐ Try a soda bath at an onsen</div>
+            <div style="font-size: 0.88rem; padding: 4px;">☐ Eat sushi at Tsukiji Market</div>
+            <div style="font-size: 0.88rem; padding: 4px;">☐ Buy washi tape at Itoya</div>
+            <div style="font-size: 0.88rem; padding: 4px;">☐ Get a Totoro cream puff</div>
+            <div style="font-size: 0.88rem; padding: 4px;">☐ See the sakura trees</div>
+            <div style="font-size: 0.88rem; padding: 4px;">☐ Visit the Lucky Cat Temple</div>
+            <div style="font-size: 0.88rem; padding: 4px;">☐ Eat ramen from a ticket machine</div>
+            <div style="font-size: 0.88rem; padding: 4px;">☐ Explore Nakameguro canal</div>
+            <div style="font-size: 0.88rem; padding: 4px;">☐ Find a vending machine surprise</div>
+            <div style="font-size: 0.88rem; padding: 4px;">☐ Buy J-beauty skincare finds</div>
+            <div style="font-size: 0.88rem; padding: 4px;">☐ Wander Yanaka Cat Town</div>
+        </div>
+    </div>
+
+    <div style="margin-top: 20px; text-align: center; opacity: 0.6;">
+        <p style="font-family: 'Fredoka One', cursive; color: #ff85a2; font-size: 1.2rem;">🌸 Mata ne, Tokyo! (See you again, Tokyo!) 🌸</p>
+    </div>
+</div>
+
+</body>
+</html>
