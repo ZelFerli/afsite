@@ -1,0 +1,920 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Perfume Lab — 2024 Portfolio Analysis</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --ink:        #1c1c1c;
+    --ink-light:  #5a5a5a;
+    --ink-faint:  #9a9a9a;
+    --paper:      #f7f4f0;
+    --paper-dark: #ede9e3;
+    --rule:       #d8d2c8;
+    --accent:     #7a6248;
+    --accent-lt:  #c4aa8a;
+    --fresh:      #4a7c6f;
+    --floral:     #8f6a7a;
+    --woody:      #7a5c3a;
+    --oriental:   #7a6020;
+    --danger:     #8b3a3a;
+    --serif:      'Cormorant Garamond', Georgia, serif;
+    --sans:       'DM Sans', system-ui, sans-serif;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: var(--sans);
+    background: var(--paper);
+    color: var(--ink);
+    font-size: 15px;
+    line-height: 1.6;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: var(--paper);
+    border-bottom: 1px solid var(--rule);
+    padding: 0 2rem;
+    display: flex; align-items: center; gap: 2rem;
+    height: 52px;
+  }
+  nav .brand {
+    font-family: var(--serif);
+    font-size: 1.1rem;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    color: var(--ink);
+    text-decoration: none;
+    white-space: nowrap;
+    margin-right: auto;
+  }
+  nav a {
+    font-size: 0.78rem;
+    font-weight: 400;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--ink-light);
+    text-decoration: none;
+    transition: color 0.2s;
+    white-space: nowrap;
+  }
+  nav a:hover { color: var(--ink); }
+
+  /* ── HERO ── */
+  .hero {
+    margin-top: 52px;
+    padding: 6rem 2rem 4rem;
+    max-width: 860px;
+    margin-left: auto; margin-right: auto;
+    margin-top: calc(52px + 5rem);
+  }
+  .hero-eyebrow {
+    font-size: 0.72rem;
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 1.2rem;
+  }
+  .hero h1 {
+    font-family: var(--serif);
+    font-size: clamp(2.6rem, 6vw, 4.2rem);
+    font-weight: 300;
+    line-height: 1.1;
+    color: var(--ink);
+    margin-bottom: 1.4rem;
+  }
+  .hero h1 em { font-style: italic; color: var(--accent); }
+  .hero p {
+    font-size: 1.05rem;
+    color: var(--ink-light);
+    max-width: 560px;
+    font-weight: 300;
+    margin-bottom: 2.5rem;
+  }
+  .hero-stats {
+    display: flex; gap: 2.5rem; flex-wrap: wrap;
+    padding-top: 2rem;
+    border-top: 1px solid var(--rule);
+  }
+  .hero-stat {}
+  .hero-stat .val {
+    font-family: var(--serif);
+    font-size: 1.9rem;
+    font-weight: 400;
+    color: var(--ink);
+    display: block;
+    line-height: 1;
+  }
+  .hero-stat .lbl {
+    font-size: 0.72rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    display: block;
+    margin-top: 0.3rem;
+  }
+
+  /* ── LAYOUT ── */
+  .container {
+    max-width: 1080px;
+    margin: 0 auto;
+    padding: 0 2rem;
+  }
+
+  section {
+    padding: 5rem 0;
+    border-top: 1px solid var(--rule);
+  }
+
+  .section-label {
+    font-size: 0.7rem;
+    font-weight: 500;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 0.8rem;
+  }
+  .section-title {
+    font-family: var(--serif);
+    font-size: clamp(1.7rem, 3vw, 2.4rem);
+    font-weight: 300;
+    line-height: 1.2;
+    margin-bottom: 0.5rem;
+  }
+  .section-sub {
+    color: var(--ink-light);
+    font-size: 0.95rem;
+    font-weight: 300;
+    margin-bottom: 2.8rem;
+    max-width: 600px;
+  }
+
+  /* ── STAT CARDS (small) ── */
+  .stat-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 1px;
+    background: var(--rule);
+    border: 1px solid var(--rule);
+    margin-bottom: 3rem;
+  }
+  .stat-card {
+    background: var(--paper);
+    padding: 1.4rem 1.5rem;
+  }
+  .stat-card .v {
+    font-family: var(--serif);
+    font-size: 1.75rem;
+    font-weight: 400;
+    color: var(--ink);
+    display: block;
+    line-height: 1;
+  }
+  .stat-card .l {
+    font-size: 0.72rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    margin-top: 0.4rem;
+    display: block;
+  }
+
+  /* ── INSIGHT CARDS (text) ── */
+  .insight-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 1.5rem;
+  }
+  .insight-card {
+    background: var(--paper-dark);
+    border: 1px solid var(--rule);
+    padding: 1.5rem;
+  }
+  .insight-card .ic-label {
+    font-size: 0.68rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    font-weight: 500;
+    color: var(--accent);
+    margin-bottom: 0.5rem;
+  }
+  .insight-card p {
+    font-size: 0.9rem;
+    color: var(--ink-light);
+    line-height: 1.55;
+  }
+
+  /* ── FAMILY BARS ── */
+  .family-list { display: flex; flex-direction: column; gap: 1.2rem; }
+  .family-row { display: flex; align-items: center; gap: 1.2rem; }
+  .family-label {
+    font-size: 0.82rem;
+    letter-spacing: 0.06em;
+    font-weight: 500;
+    width: 120px;
+    flex-shrink: 0;
+  }
+  .family-bar-wrap { flex: 1; height: 28px; background: var(--paper-dark); border: 1px solid var(--rule); position: relative; }
+  .family-bar {
+    height: 100%;
+    transition: width 1.2s cubic-bezier(0.4,0,0.2,1);
+  }
+  .family-bar-text {
+    position: absolute; right: 0.6rem; top: 50%; transform: translateY(-50%);
+    font-size: 0.78rem; color: var(--ink-light); font-variant-numeric: tabular-nums;
+  }
+  .family-meta {
+    font-size: 0.78rem; color: var(--ink-faint); width: 160px; flex-shrink: 0; text-align: right;
+  }
+
+  /* ── TWO COL ── */
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; }
+  @media (max-width: 700px) { .two-col { grid-template-columns: 1fr; } }
+
+  /* ── BRAND LIST ── */
+  .brand-list { display: flex; flex-direction: column; }
+  .brand-row {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0.75rem 0;
+    border-bottom: 1px solid var(--rule);
+    gap: 1rem;
+  }
+  .brand-row:first-child { border-top: 1px solid var(--rule); }
+  .brand-rank {
+    font-family: var(--serif);
+    font-size: 1rem;
+    color: var(--ink-faint);
+    width: 1.5rem;
+    flex-shrink: 0;
+  }
+  .brand-name { font-size: 0.9rem; flex: 1; }
+  .brand-type {
+    font-size: 0.65rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 0.15rem 0.5rem;
+    border: 1px solid var(--rule);
+    color: var(--ink-faint);
+  }
+  .brand-val {
+    font-family: var(--serif);
+    font-size: 1.05rem;
+    color: var(--accent);
+    text-align: right;
+    min-width: 70px;
+  }
+
+  /* ── BRAND TYPE CARDS ── */
+  .type-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--rule); border: 1px solid var(--rule); }
+  @media (max-width: 600px) { .type-grid { grid-template-columns: 1fr; } }
+  .type-card {
+    background: var(--paper);
+    padding: 2rem 1.5rem;
+  }
+  .type-card .type-name {
+    font-family: var(--serif);
+    font-size: 1.5rem;
+    font-weight: 400;
+    margin-bottom: 1.2rem;
+    padding-bottom: 0.8rem;
+    border-bottom: 2px solid currentColor;
+  }
+  .type-card.heritage .type-name { color: var(--accent); }
+  .type-card.legacy .type-name { color: var(--ink-light); }
+  .type-card.new .type-name { color: var(--fresh); }
+  .type-stat { margin-bottom: 0.9rem; }
+  .type-stat .ts-v {
+    font-family: var(--serif);
+    font-size: 1.4rem;
+    font-weight: 300;
+    color: var(--ink);
+    display: block; line-height: 1;
+  }
+  .type-stat .ts-l {
+    font-size: 0.7rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    display: block; margin-top: 0.2rem;
+  }
+  .type-note {
+    margin-top: 1.2rem;
+    font-size: 0.82rem;
+    color: var(--ink-faint);
+    font-style: italic;
+    line-height: 1.5;
+  }
+
+  /* ── PRICING TABLE ── */
+  .price-table { width: 100%; border-collapse: collapse; margin-bottom: 2rem; }
+  .price-table th {
+    font-size: 0.68rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    text-align: left;
+    padding: 0.6rem 1rem;
+    border-bottom: 1px solid var(--rule);
+    font-weight: 500;
+  }
+  .price-table td {
+    padding: 0.85rem 1rem;
+    font-size: 0.9rem;
+    border-bottom: 1px solid var(--rule);
+  }
+  .price-table tr.highlight td { background: var(--paper-dark); }
+  .price-table td.rev {
+    font-family: var(--serif);
+    font-size: 1.05rem;
+    color: var(--accent);
+  }
+  .price-table td.rating { color: var(--ink-light); }
+
+  /* ── GEM CARDS ── */
+  .gem-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 1px; background: var(--rule); border: 1px solid var(--rule); }
+  .gem-card {
+    background: var(--paper);
+    padding: 1.4rem 1.3rem;
+    position: relative;
+    overflow: hidden;
+  }
+  .gem-card::before {
+    content: '';
+    position: absolute; top: 0; left: 0; right: 0;
+    height: 3px;
+    background: var(--accent-lt);
+  }
+  .gem-card .gem-name {
+    font-family: var(--serif);
+    font-size: 1.1rem;
+    font-weight: 400;
+    margin-bottom: 0.2rem;
+    line-height: 1.25;
+  }
+  .gem-card .gem-brand { font-size: 0.78rem; color: var(--ink-faint); font-style: italic; margin-bottom: 0.8rem; }
+  .gem-card .gem-rating {
+    font-family: var(--serif);
+    font-size: 1.4rem;
+    color: var(--accent);
+    display: block;
+  }
+  .gem-card .gem-meta { font-size: 0.76rem; color: var(--ink-faint); margin-top: 0.3rem; }
+
+  /* ── RECS ── */
+  .rec-list { display: flex; flex-direction: column; gap: 0; }
+  .rec-item {
+    display: grid;
+    grid-template-columns: 56px 1fr;
+    gap: 1.5rem;
+    padding: 1.8rem 0;
+    border-bottom: 1px solid var(--rule);
+    align-items: start;
+  }
+  .rec-item:first-child { border-top: 1px solid var(--rule); }
+  .rec-num {
+    font-family: var(--serif);
+    font-size: 2rem;
+    font-weight: 300;
+    color: var(--rule);
+    line-height: 1;
+    padding-top: 0.1rem;
+  }
+  .rec-content {}
+  .rec-title {
+    font-family: var(--serif);
+    font-size: 1.15rem;
+    font-weight: 400;
+    margin-bottom: 0.4rem;
+    color: var(--ink);
+  }
+  .rec-body { font-size: 0.9rem; color: var(--ink-light); line-height: 1.6; font-weight: 300; }
+
+  /* ── INVENTORY SECTION ── */
+  .risk-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 1.5rem; margin-bottom: 2rem; }
+  .risk-card {
+    border: 1px solid var(--rule);
+    padding: 1.4rem;
+  }
+  .risk-card .risk-title {
+    font-family: var(--serif);
+    font-size: 1rem;
+    margin-bottom: 0.5rem;
+  }
+  .risk-card p { font-size: 0.88rem; color: var(--ink-light); line-height: 1.55; }
+  .risk-card.alert { border-color: var(--danger); }
+  .risk-card.alert .risk-title { color: var(--danger); }
+  .risk-card.oppty .risk-title { color: var(--fresh); }
+  .risk-card.warn .risk-title { color: var(--oriental); }
+
+  .dead-stat {
+    display: inline-flex; align-items: baseline; gap: 0.5rem;
+    margin-bottom: 1.5rem;
+  }
+  .dead-stat .big {
+    font-family: var(--serif);
+    font-size: 3rem;
+    font-weight: 300;
+    color: var(--danger);
+    line-height: 1;
+  }
+  .dead-stat .desc { font-size: 0.9rem; color: var(--ink-light); }
+
+  /* ── FOOTER ── */
+  footer {
+    border-top: 1px solid var(--rule);
+    padding: 2.5rem 2rem;
+    margin-top: 4rem;
+  }
+  footer p { font-size: 0.78rem; color: var(--ink-faint); text-align: center; letter-spacing: 0.04em; }
+
+  /* ── ANIMATIONS ── */
+  .reveal {
+    opacity: 0;
+    transform: translateY(18px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+
+  /* ── MISC ── */
+  .tag {
+    display: inline-block;
+    font-size: 0.65rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 0.15rem 0.5rem;
+    border: 1px solid var(--rule);
+    color: var(--ink-faint);
+    margin-right: 0.3rem;
+  }
+
+  .callout {
+    border-left: 3px solid var(--accent-lt);
+    padding: 1rem 1.2rem;
+    background: var(--paper-dark);
+    margin: 2rem 0;
+    font-size: 0.9rem;
+    color: var(--ink-light);
+    line-height: 1.6;
+  }
+  .callout strong { color: var(--ink); font-weight: 500; }
+
+  .pill {
+    display: inline-block;
+    font-size: 0.68rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 0.2rem 0.6rem;
+    border-radius: 999px;
+    font-weight: 500;
+  }
+  .pill-green { background: #d6ece8; color: var(--fresh); }
+  .pill-gold  { background: #f0e6d6; color: var(--accent); }
+  .pill-red   { background: #f0d8d8; color: var(--danger); }
+
+  @media (max-width: 640px) {
+    nav a { display: none; }
+    .family-meta { display: none; }
+    .two-col { gap: 2rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="brand">The Perfume Lab</a>
+  <a href="#overview">Overview</a>
+  <a href="#families">Families</a>
+  <a href="#brands">Brands</a>
+  <a href="#pricing">Pricing</a>
+  <a href="#inventory">Inventory</a>
+  <a href="#gems">Hidden Gems</a>
+  <a href="#recs">Recommendations</a>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <p class="hero-eyebrow">2024 Portfolio Analysis</p>
+  <h1>The Perfume Lab<br><em>Annual Report</em></h1>
+  <p>A full analysis of 514 products across 29 brands and five fragrance families — covering revenue performance, brand health, pricing, inventory risk, and strategic priorities for 2025.</p>
+  <div class="hero-stats">
+    <div class="hero-stat">
+      <span class="val">$2.63M</span>
+      <span class="lbl">Total Revenue</span>
+    </div>
+    <div class="hero-stat">
+      <span class="val">514</span>
+      <span class="lbl">Products</span>
+    </div>
+    <div class="hero-stat">
+      <span class="val">29</span>
+      <span class="lbl">Brands</span>
+    </div>
+    <div class="hero-stat">
+      <span class="val">4.36</span>
+      <span class="lbl">Avg Rating</span>
+    </div>
+    <div class="hero-stat">
+      <span class="val">51.8%</span>
+      <span class="lbl">Online Mix</span>
+    </div>
+    <div class="hero-stat">
+      <span class="val">$239.81</span>
+      <span class="lbl">Avg Price</span>
+    </div>
+  </div>
+</div>
+
+<!-- OVERVIEW -->
+<section id="overview">
+  <div class="container">
+    <p class="section-label reveal">Executive Summary</p>
+    <h2 class="section-title reveal">Portfolio Performance at a Glance</h2>
+    <p class="section-sub reveal">Strong brand health across the board with consistent customer satisfaction. Key risks centre on inventory concentration and revenue dependency on a single heritage brand.</p>
+
+    <div class="insight-grid reveal">
+      <div class="insight-card">
+        <div class="ic-label">Heritage Power</div>
+        <p>Acqua di Parma generates $520K from just 30 SKUs — nearly 4× the next brand. Single-brand concentration at ~20% of total revenue.</p>
+      </div>
+      <div class="insight-card">
+        <div class="ic-label">Dead Stock Alert</div>
+        <p>49 products (9.5%) recorded zero units sold in 2024. Several carry strong ratings, suggesting discoverability issues rather than quality failures.</p>
+      </div>
+      <div class="insight-card">
+        <div class="ic-label">Channel Balance</div>
+        <p>Near-even 52/48 online-to-retail split across the portfolio — healthy for luxury fragrance where in-store trial remains important.</p>
+      </div>
+      <div class="insight-card">
+        <div class="ic-label">New Brands Rising</div>
+        <p>New brands average 18.5 units/SKU versus Legacy's 20.4 — a small gap that signals real traction and growing market share.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FRAGRANCE FAMILIES -->
+<section id="families">
+  <div class="container">
+    <p class="section-label reveal">Revenue by Fragrance Family</p>
+    <h2 class="section-title reveal">Fresh & Floral Lead the Market</h2>
+    <p class="section-sub reveal">Together accounting for 61% of total revenue. Oriental has the most SKUs but ranks 4th — pointing to a long tail of low-velocity products.</p>
+
+    <div class="family-list reveal" id="family-bars">
+      <div class="family-row">
+        <span class="family-label" style="color:var(--fresh)">Fresh</span>
+        <div class="family-bar-wrap">
+          <div class="family-bar" data-w="100" style="width:0%;background:var(--fresh);opacity:0.7"></div>
+          <span class="family-bar-text">$867,640</span>
+        </div>
+        <span class="family-meta">122 SKUs · Avg ★ 4.36</span>
+      </div>
+      <div class="family-row">
+        <span class="family-label" style="color:var(--floral)">Floral</span>
+        <div class="family-bar-wrap">
+          <div class="family-bar" data-w="84" style="width:0%;background:var(--floral);opacity:0.7"></div>
+          <span class="family-bar-text">$728,049</span>
+        </div>
+        <span class="family-meta">130 SKUs · Avg ★ 4.37</span>
+      </div>
+      <div class="family-row">
+        <span class="family-label" style="color:var(--woody)">Woody</span>
+        <div class="family-bar-wrap">
+          <div class="family-bar" data-w="59" style="width:0%;background:var(--woody);opacity:0.7"></div>
+          <span class="family-bar-text">$511,614</span>
+        </div>
+        <span class="family-meta">116 SKUs · Avg ★ 4.39</span>
+      </div>
+      <div class="family-row">
+        <span class="family-label" style="color:var(--oriental)">Oriental</span>
+        <div class="family-bar-wrap">
+          <div class="family-bar" data-w="49" style="width:0%;background:var(--oriental);opacity:0.7"></div>
+          <span class="family-bar-text">$421,268</span>
+        </div>
+        <span class="family-meta">138 SKUs · Avg ★ 4.33</span>
+      </div>
+      <div class="family-row">
+        <span class="family-label" style="color:var(--accent)">Or./Amber</span>
+        <div class="family-bar-wrap">
+          <div class="family-bar" data-w="12" style="width:0%;background:var(--accent);opacity:0.7"></div>
+          <span class="family-bar-text">$102,543</span>
+        </div>
+        <span class="family-meta">8 SKUs · Avg ★ 4.53</span>
+      </div>
+    </div>
+
+    <div class="callout reveal">
+      <strong>Oriental/Amber efficiency:</strong> Just 8 products (all Acqua di Parma Colonia variants) deliver $102K with the highest average rating in the portfolio at 4.53 — proof that tight curation at accessible price points can outperform breadth.
+    </div>
+  </div>
+</section>
+
+<!-- BRANDS -->
+<section id="brands">
+  <div class="container">
+    <p class="section-label reveal">Brand Performance</p>
+    <h2 class="section-title reveal">Revenue Leaders & Satisfaction Champions</h2>
+    <p class="section-sub reveal">Smaller New brands consistently outrate Legacy incumbents, while Heritage power drives volume efficiency at scale.</p>
+
+    <div class="two-col">
+      <div class="reveal">
+        <p style="font-size:0.72rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--ink-faint);margin-bottom:1rem;font-weight:500">Top Revenue Brands</p>
+        <div class="brand-list">
+          <div class="brand-row"><span class="brand-rank">1</span><span class="brand-name">Acqua di Parma</span><span class="brand-type">Heritage</span><span class="brand-val">$520K</span></div>
+          <div class="brand-row"><span class="brand-rank">2</span><span class="brand-name">Frederic Malle</span><span class="brand-type">Legacy</span><span class="brand-val">$142K</span></div>
+          <div class="brand-row"><span class="brand-rank">3</span><span class="brand-name">L'Artisan Parfumeur</span><span class="brand-type">Legacy</span><span class="brand-val">$124K</span></div>
+          <div class="brand-row"><span class="brand-rank">4</span><span class="brand-name">Maison F. Kurkdjian</span><span class="brand-type">Legacy</span><span class="brand-val">$112K</span></div>
+          <div class="brand-row"><span class="brand-rank">5</span><span class="brand-name">Byredo</span><span class="brand-type">Legacy</span><span class="brand-val">$101K</span></div>
+          <div class="brand-row"><span class="brand-rank">6</span><span class="brand-name">Annick Goutal</span><span class="brand-type">Legacy</span><span class="brand-val">$93K</span></div>
+          <div class="brand-row"><span class="brand-rank">7</span><span class="brand-name">Tom Ford</span><span class="brand-type">Legacy</span><span class="brand-val">$89K</span></div>
+          <div class="brand-row"><span class="brand-rank">8</span><span class="brand-name">Escentric Molecules</span><span class="brand-type">Legacy</span><span class="brand-val">$83K</span></div>
+          <div class="brand-row"><span class="brand-rank">9</span><span class="brand-name">Parfums de Marly</span><span class="brand-type">New</span><span class="brand-val">$76K</span></div>
+          <div class="brand-row"><span class="brand-rank">10</span><span class="brand-name">Nishane</span><span class="brand-type">New</span><span class="brand-val">$73K</span></div>
+        </div>
+      </div>
+      <div class="reveal">
+        <p style="font-size:0.72rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--ink-faint);margin-bottom:1rem;font-weight:500">Top Rated Brands</p>
+        <div class="brand-list">
+          <div class="brand-row"><span class="brand-rank">1</span><span class="brand-name">Dedcool</span><span class="brand-type">New</span><span class="brand-val">4.54</span></div>
+          <div class="brand-row"><span class="brand-rank">2</span><span class="brand-name">Phlur</span><span class="brand-type">New</span><span class="brand-val">4.52</span></div>
+          <div class="brand-row"><span class="brand-rank">3</span><span class="brand-name">Annick Goutal</span><span class="brand-type">Legacy</span><span class="brand-val">4.52</span></div>
+          <div class="brand-row"><span class="brand-rank">4</span><span class="brand-name">Byredo</span><span class="brand-type">Legacy</span><span class="brand-val">4.49</span></div>
+          <div class="brand-row"><span class="brand-rank">5</span><span class="brand-name">Amouage</span><span class="brand-type">New</span><span class="brand-val">4.49</span></div>
+          <div class="brand-row"><span class="brand-rank">6</span><span class="brand-name">Acqua di Parma</span><span class="brand-type">Heritage</span><span class="brand-val">4.47</span></div>
+          <div class="brand-row"><span class="brand-rank">7</span><span class="brand-name">Mancera</span><span class="brand-type">New</span><span class="brand-val">4.47</span></div>
+          <div class="brand-row"><span class="brand-rank">8</span><span class="brand-name">L'Artisan Parfumeur</span><span class="brand-type">Legacy</span><span class="brand-val">4.45</span></div>
+          <div class="brand-row"><span class="brand-rank">9</span><span class="brand-name">Xerjoff</span><span class="brand-type">New</span><span class="brand-val">4.45</span></div>
+          <div class="brand-row"><span class="brand-rank">10</span><span class="brand-name">Juliette Has a Gun</span><span class="brand-type">New</span><span class="brand-val">4.44</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div style="margin-top:3rem">
+      <p class="section-label reveal">Brand Type Breakdown</p>
+      <div class="type-grid reveal">
+        <div class="type-card heritage">
+          <div class="type-name">Heritage</div>
+          <div class="type-stat"><span class="ts-v">30</span><span class="ts-l">Products</span></div>
+          <div class="type-stat"><span class="ts-v">$377,283</span><span class="ts-l">2024 Revenue</span></div>
+          <div class="type-stat"><span class="ts-v">60.8</span><span class="ts-l">Avg Units / SKU</span></div>
+          <p class="type-note">Acqua di Parma only. Dominant volume efficiency — sells nearly 3× more per SKU than any other type.</p>
+        </div>
+        <div class="type-card legacy">
+          <div class="type-name">Legacy</div>
+          <div class="type-stat"><span class="ts-v">260</span><span class="ts-l">Products</span></div>
+          <div class="type-stat"><span class="ts-v">$1,519,923</span><span class="ts-l">2024 Revenue</span></div>
+          <div class="type-stat"><span class="ts-v">20.4</span><span class="ts-l">Avg Units / SKU</span></div>
+          <p class="type-note">Backbone of the portfolio. Breadth and depth across all five fragrance families.</p>
+        </div>
+        <div class="type-card new">
+          <div class="type-name">New</div>
+          <div class="type-stat"><span class="ts-v">224</span><span class="ts-l">Products</span></div>
+          <div class="type-stat"><span class="ts-v">$733,908</span><span class="ts-l">2024 Revenue</span></div>
+          <div class="type-stat"><span class="ts-v">18.5</span><span class="ts-l">Avg Units / SKU</span></div>
+          <p class="type-note">Closing the gap fast. Strong ratings and traction — the next generation of Legacy brands.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section id="pricing">
+  <div class="container">
+    <p class="section-label reveal">Pricing Analysis</p>
+    <h2 class="section-title reveal">Luxury & Mid-Range Dominate Revenue</h2>
+    <p class="section-sub reveal">Price has virtually no correlation with customer rating (r = 0.04). Brand equity and scent quality drive purchases, not cost.</p>
+
+    <table class="price-table reveal">
+      <thead>
+        <tr>
+          <th>Price Tier</th>
+          <th>Range</th>
+          <th># Products</th>
+          <th>Total Revenue</th>
+          <th>Avg Rating</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Budget</td>
+          <td>Under $130</td>
+          <td>57</td>
+          <td class="rev">$117,501</td>
+          <td class="rating">4.40</td>
+        </tr>
+        <tr class="highlight">
+          <td><strong>Mid-range</strong></td>
+          <td>$130 – $230</td>
+          <td>211</td>
+          <td class="rev"><strong>$990,884</strong></td>
+          <td class="rating">4.36</td>
+        </tr>
+        <tr>
+          <td>Premium</td>
+          <td>$230 – $290</td>
+          <td>117</td>
+          <td class="rev">$609,225</td>
+          <td class="rating">4.32</td>
+        </tr>
+        <tr class="highlight">
+          <td><strong>Luxury</strong></td>
+          <td>Above $290</td>
+          <td>129</td>
+          <td class="rev"><strong>$913,503</strong></td>
+          <td class="rating">4.40</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="insight-grid reveal">
+      <div class="insight-card">
+        <div class="ic-label">No Price-Quality Link</div>
+        <p>Correlation between price and rating is essentially zero (r = 0.04). Budget and Luxury tiers both rate at 4.40 — identical satisfaction at opposite ends of the price range.</p>
+      </div>
+      <div class="insight-card">
+        <div class="ic-label">Mid-Range is the Engine</div>
+        <p>$990K from 211 products makes Mid-range the single largest revenue contributor — the sweet spot between accessibility and perceived luxury.</p>
+      </div>
+      <div class="insight-card">
+        <div class="ic-label">Woody Commands a Premium</div>
+        <p>Woody fragrances carry the highest average price ($249), while Oriental/Amber is the most accessible ($159 avg) — driven by the Colonia range's deliberate positioning.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- INVENTORY -->
+<section id="inventory">
+  <div class="container">
+    <p class="section-label reveal">Inventory Risk</p>
+    <h2 class="section-title reveal">Addressing Portfolio Liabilities</h2>
+
+    <div class="dead-stat reveal">
+      <span class="big">49</span>
+      <span class="desc">products (9.5% of portfolio)<br>recorded zero units sold in 2024</span>
+    </div>
+
+    <div class="risk-grid reveal">
+      <div class="risk-card alert">
+        <div class="risk-title">Primary Offenders</div>
+        <p>Parfums de Marly leads with 4 non-selling SKUs. Mancera, Nishane, Escentric Molecules, and Creed follow with 2–3 each.</p>
+      </div>
+      <div class="risk-card oppty">
+        <div class="risk-title">Hidden Gems Opportunity</div>
+        <p>Several zero-sales products carry ratings of 4.7+. These are "unfindable" rather than undesirable — strong promotional candidates before any liquidation decision.</p>
+      </div>
+      <div class="risk-card warn">
+        <div class="risk-title">Overstock Risk</div>
+        <p>Jasmine Royale, Rose Royale, and Tonka Bean Royale carry dangerously high stock-to-sales ratios — each holding 20× or more annual sales velocity in inventory.</p>
+      </div>
+    </div>
+
+    <div class="callout reveal">
+      <strong>Recommended action:</strong> Audit all 49 zero-sales SKUs immediately. Promote high-rated hidden gems through editorial features or sample programmes. Liquidate genuinely stagnant stock. Implement a standing stock-cover threshold of 20× annual sales velocity to prevent future build-up.
+    </div>
+  </div>
+</section>
+
+<!-- HIDDEN GEMS -->
+<section id="gems">
+  <div class="container">
+    <p class="section-label reveal">Hidden Gems</p>
+    <h2 class="section-title reveal">High Satisfaction, Low Visibility</h2>
+    <p class="section-sub reveal">Products rated 4.7 or above that sold 10 or fewer units in 2024. Customer satisfaction is proven — these need a sales push, not a reformulation.</p>
+
+    <div class="gem-grid reveal">
+      <div class="gem-card">
+        <div class="gem-name">Noir Ginger</div>
+        <div class="gem-brand">Clive Christian</div>
+        <span class="gem-rating">★ 4.9</span>
+        <div class="gem-meta">5 units · $374.56</div>
+      </div>
+      <div class="gem-card">
+        <div class="gem-name">La Amber</div>
+        <div class="gem-brand">Nishane</div>
+        <span class="gem-rating">★ 4.9</span>
+        <div class="gem-meta">5 units · $205.59</div>
+      </div>
+      <div class="gem-card">
+        <div class="gem-name">Pure Jour</div>
+        <div class="gem-brand">Escentric Molecules</div>
+        <span class="gem-rating">★ 4.8</span>
+        <div class="gem-meta">3 units · $338.59</div>
+      </div>
+      <div class="gem-card">
+        <div class="gem-name">Le Labdanum</div>
+        <div class="gem-brand">Xerjoff</div>
+        <span class="gem-rating">★ 4.8</span>
+        <div class="gem-meta">4 units · $378.78</div>
+      </div>
+      <div class="gem-card">
+        <div class="gem-name">Guaiac Wood Paradis</div>
+        <div class="gem-brand">Escentric Molecules</div>
+        <span class="gem-rating">★ 4.7</span>
+        <div class="gem-meta">5 units · $370.14</div>
+      </div>
+      <div class="gem-card">
+        <div class="gem-name">Patchouli Divine</div>
+        <div class="gem-brand">Memo Paris</div>
+        <span class="gem-rating">★ 4.7</span>
+        <div class="gem-meta">4 units · $124.94</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- RECOMMENDATIONS -->
+<section id="recs">
+  <div class="container">
+    <p class="section-label reveal">Strategic Recommendations</p>
+    <h2 class="section-title reveal">Growth & Diversification Roadmap</h2>
+    <p class="section-sub reveal">Six priorities for 2025, ranked by urgency.</p>
+
+    <div class="rec-list reveal">
+      <div class="rec-item">
+        <div class="rec-num">01</div>
+        <div class="rec-content">
+          <div class="rec-title">Diversify Revenue Away from Acqua di Parma</div>
+          <p class="rec-body">A single heritage brand generates ~20% of total revenue from just 30 SKUs. Build depth in high-performing New brands — Dedcool, Nishane, and Mancera all show strong ratings and growing volume. Invest now before valuations rise.</p>
+        </div>
+      </div>
+      <div class="rec-item">
+        <div class="rec-num">02</div>
+        <div class="rec-content">
+          <div class="rec-title">Fix Inventory Immediately</div>
+          <p class="rec-body">49 products with zero sales represent a capital liability and ranging clutter. Audit all of them: promote high-rated hidden gems through editorial or sample programmes, and liquidate genuinely stagnant stock. Set a standing stock-cover threshold of 20× annual sales to prevent recurrence.</p>
+        </div>
+      </div>
+      <div class="rec-item">
+        <div class="rec-num">03</div>
+        <div class="rec-content">
+          <div class="rec-title">Monitor High-Revenue, Low-Satisfaction Products</div>
+          <p class="rec-body">Le Rose (Creed) and Secret Royale (Skylar) both rank in the top 10 by revenue despite 3.9 ratings. Novelty-driven sales fade once word-of-mouth catches up — invest in satisfaction improvements or diversify reliance away from these products before churn materialises.</p>
+        </div>
+      </div>
+      <div class="rec-item">
+        <div class="rec-num">04</div>
+        <div class="rec-content">
+          <div class="rec-title">Rationalise the Oriental Family</div>
+          <p class="rec-body">138 Oriental SKUs — the most of any family — rank only 4th in revenue. The long tail of low-velocity products is diluting buyer focus and ranging efficiency. A targeted cull would sharpen the range and improve overall sell-through.</p>
+        </div>
+      </div>
+      <div class="rec-item">
+        <div class="rec-num">05</div>
+        <div class="rec-content">
+          <div class="rec-title">Expand Physical Retail for Online-Heavy Brands</div>
+          <p class="rec-body">Brands with over 65% online exposure are missing in-store discovery — particularly important in fragrance, where trial drives conversion. Explore targeted wholesale or pop-up partnerships to broaden physical reach without heavy infrastructure investment.</p>
+        </div>
+      </div>
+      <div class="rec-item">
+        <div class="rec-num">06</div>
+        <div class="rec-content">
+          <div class="rec-title">Launch an Oriental/Amber Discovery Set for Retail</div>
+          <p class="rec-body">Oriental/Amber holds the portfolio's highest average rating (4.53) and is 69% online — proven quality with limited physical presence. A curated retail discovery set would bridge DTC success with in-store trial and introduce the Colonia range to a new audience who may not shop online.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <p>The Perfume Lab &nbsp;·&nbsp; 2024 Portfolio Analysis &nbsp;·&nbsp; Confidential — Internal Use Only</p>
+</footer>
+
+<script>
+  // Scroll reveal
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry, i) => {
+      if (entry.isIntersecting) {
+        setTimeout(() => entry.target.classList.add('visible'), i * 60);
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.08 });
+  reveals.forEach(el => observer.observe(el));
+
+  // Animate bars when section comes into view
+  const barsSection = document.getElementById('family-bars');
+  const barObserver = new IntersectionObserver((entries) => {
+    if (entries[0].isIntersecting) {
+      document.querySelectorAll('.family-bar').forEach(bar => {
+        const w = bar.dataset.w;
+        setTimeout(() => bar.style.width = w + '%', 200);
+      });
+      barObserver.disconnect();
+    }
+  }, { threshold: 0.2 });
+  barObserver.observe(barsSection);
+</script>
+</body>
+</html>
