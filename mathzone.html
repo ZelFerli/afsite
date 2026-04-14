@@ -1,0 +1,723 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Talya's Practice Zone ✨</title>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --sky: #0f0c29;
+    --deep: #302b63;
+    --mid: #24243e;
+    --star1: #f9d423;
+    --star2: #ff6ec7;
+    --star3: #38f9d7;
+    --correct: #2ecc71;
+    --wrong: #e74c3c;
+    --card-bg: rgba(255,255,255,0.07);
+    --card-border: rgba(255,255,255,0.15);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Nunito', sans-serif;
+    background: linear-gradient(135deg, var(--sky), var(--deep), var(--mid));
+    min-height: 100vh;
+    color: #fff;
+    overflow-x: hidden;
+  }
+
+  /* Stars */
+  .stars {
+    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+    pointer-events: none; z-index: 0;
+    overflow: hidden;
+  }
+  .star {
+    position: absolute;
+    border-radius: 50%;
+    background: white;
+    animation: twinkle var(--dur) ease-in-out infinite alternate;
+  }
+  @keyframes twinkle {
+    from { opacity: 0.2; transform: scale(1); }
+    to { opacity: 1; transform: scale(1.4); }
+  }
+
+  .wrapper {
+    position: relative; z-index: 1;
+    max-width: 640px;
+    margin: 0 auto;
+    padding: 2rem 1.2rem 4rem;
+  }
+
+  header {
+    text-align: center;
+    margin-bottom: 2rem;
+  }
+  header h1 {
+    font-family: 'Fredoka One', cursive;
+    font-size: clamp(2rem, 8vw, 3.2rem);
+    background: linear-gradient(90deg, var(--star1), var(--star2), var(--star3));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    line-height: 1.1;
+    margin-bottom: 0.3rem;
+  }
+  header p {
+    color: rgba(255,255,255,0.6);
+    font-size: 1rem;
+    font-weight: 600;
+  }
+
+  /* Mode tabs */
+  .tabs {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 1.5rem;
+    background: rgba(0,0,0,0.25);
+    border-radius: 18px;
+    padding: 5px;
+  }
+  .tab {
+    flex: 1;
+    padding: 0.6rem 0.5rem;
+    border: none;
+    border-radius: 14px;
+    cursor: pointer;
+    font-family: 'Nunito', sans-serif;
+    font-weight: 800;
+    font-size: 0.85rem;
+    background: transparent;
+    color: rgba(255,255,255,0.5);
+    transition: all 0.2s;
+  }
+  .tab.active {
+    background: linear-gradient(135deg, var(--star2), #a855f7);
+    color: white;
+    box-shadow: 0 4px 16px rgba(255,110,199,0.4);
+  }
+  .tab:hover:not(.active) { color: white; background: rgba(255,255,255,0.08); }
+
+  /* Score bar */
+  .scorebar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: 16px;
+    padding: 0.8rem 1.2rem;
+    margin-bottom: 1.5rem;
+    backdrop-filter: blur(8px);
+  }
+  .score-item { text-align: center; }
+  .score-item .label { font-size: 0.7rem; color: rgba(255,255,255,0.5); font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; }
+  .score-item .value {
+    font-family: 'Fredoka One', cursive;
+    font-size: 1.6rem;
+    line-height: 1;
+  }
+  .score-item.correct .value { color: var(--star3); }
+  .score-item.streak .value { color: var(--star1); }
+  .score-item.total .value { color: rgba(255,255,255,0.7); }
+
+  /* Question card */
+  .question-card {
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: 24px;
+    padding: 2rem 1.5rem;
+    text-align: center;
+    backdrop-filter: blur(8px);
+    margin-bottom: 1.2rem;
+    min-height: 220px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    transition: border-color 0.3s;
+  }
+  .question-card.flash-correct { border-color: var(--correct); background: rgba(46,204,113,0.1); }
+  .question-card.flash-wrong   { border-color: var(--wrong);   background: rgba(231,76,60,0.1);  }
+
+  .question-tag {
+    display: inline-block;
+    font-size: 0.72rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    padding: 3px 12px;
+    border-radius: 20px;
+    margin-bottom: 1rem;
+  }
+  .question-tag.times { background: rgba(255,110,199,0.25); color: var(--star2); }
+  .question-tag.clock { background: rgba(56,249,215,0.2); color: var(--star3); }
+
+  .question-text {
+    font-family: 'Fredoka One', cursive;
+    font-size: clamp(2rem, 9vw, 3.5rem);
+    line-height: 1.1;
+    margin-bottom: 1rem;
+  }
+
+  /* Clock SVG */
+  #clock-face { display: block; margin: 0 auto 1rem; }
+
+  /* Answer input area */
+  .answer-row {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    justify-content: center;
+  }
+  .answer-input {
+    font-family: 'Fredoka One', cursive;
+    font-size: 1.6rem;
+    width: 120px;
+    text-align: center;
+    padding: 0.5rem 0.8rem;
+    border-radius: 14px;
+    border: 2px solid var(--card-border);
+    background: rgba(255,255,255,0.1);
+    color: white;
+    outline: none;
+    transition: border-color 0.2s;
+  }
+  .answer-input:focus { border-color: var(--star2); }
+  .answer-input::placeholder { color: rgba(255,255,255,0.25); }
+
+  /* Clock answer has two parts */
+  .clock-answer-row {
+    display: flex;
+    gap: 6px;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+  .clock-input {
+    font-family: 'Fredoka One', cursive;
+    font-size: 1.4rem;
+    width: 72px;
+    text-align: center;
+    padding: 0.5rem 0.5rem;
+    border-radius: 14px;
+    border: 2px solid var(--card-border);
+    background: rgba(255,255,255,0.1);
+    color: white;
+    outline: none;
+    transition: border-color 0.2s;
+  }
+  .clock-input:focus { border-color: var(--star3); }
+  .clock-sep {
+    font-family: 'Fredoka One', cursive;
+    font-size: 1.6rem;
+    color: rgba(255,255,255,0.4);
+  }
+  .hint { font-size: 0.8rem; color: rgba(255,255,255,0.4); margin-top: 0.5rem; font-weight: 600; }
+
+  .submit-btn {
+    font-family: 'Fredoka One', cursive;
+    font-size: 1.2rem;
+    padding: 0.6rem 1.4rem;
+    border-radius: 14px;
+    border: none;
+    cursor: pointer;
+    background: linear-gradient(135deg, var(--star2), #a855f7);
+    color: white;
+    transition: transform 0.15s, box-shadow 0.15s;
+    box-shadow: 0 4px 16px rgba(168,85,247,0.35);
+  }
+  .submit-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(168,85,247,0.5); }
+  .submit-btn:active { transform: scale(0.97); }
+
+  /* Feedback */
+  .feedback {
+    min-height: 2rem;
+    text-align: center;
+    font-family: 'Fredoka One', cursive;
+    font-size: 1.3rem;
+    transition: opacity 0.3s;
+  }
+  .feedback.correct { color: var(--star3); }
+  .feedback.wrong   { color: #ff8f8f; }
+  .feedback.hidden  { opacity: 0; }
+
+  /* Celebration */
+  .confetti-wrap {
+    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+    pointer-events: none; z-index: 999; overflow: hidden;
+  }
+  .confetto {
+    position: absolute;
+    width: 10px; height: 10px;
+    border-radius: 2px;
+    animation: fall linear forwards;
+  }
+  @keyframes fall {
+    0%   { transform: translateY(-20px) rotate(0deg); opacity: 1; }
+    100% { transform: translateY(110vh) rotate(720deg); opacity: 0; }
+  }
+
+  /* Next button */
+  .next-btn {
+    display: block;
+    margin: 1rem auto 0;
+    font-family: 'Fredoka One', cursive;
+    font-size: 1rem;
+    padding: 0.55rem 2rem;
+    border-radius: 14px;
+    border: 2px solid var(--star1);
+    cursor: pointer;
+    background: transparent;
+    color: var(--star1);
+    transition: background 0.2s, color 0.2s;
+  }
+  .next-btn:hover { background: var(--star1); color: #1a1a2e; }
+  .next-btn.hidden { display: none; }
+
+  /* Settings panel */
+  .settings {
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: 20px;
+    padding: 1rem 1.2rem;
+    margin-bottom: 1.5rem;
+    backdrop-filter: blur(8px);
+  }
+  .settings summary {
+    cursor: pointer;
+    font-weight: 800;
+    font-size: 0.85rem;
+    color: rgba(255,255,255,0.6);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    list-style: none;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .settings summary::before { content: '⚙️'; font-size: 14px; }
+  .settings[open] summary { color: rgba(255,255,255,0.9); margin-bottom: 0.8rem; }
+  .settings-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  .toggle-chip {
+    padding: 5px 14px;
+    border-radius: 20px;
+    border: 1.5px solid rgba(255,255,255,0.2);
+    background: transparent;
+    color: rgba(255,255,255,0.5);
+    font-family: 'Nunito', sans-serif;
+    font-weight: 700;
+    font-size: 0.85rem;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .toggle-chip.on {
+    background: rgba(249,212,35,0.2);
+    border-color: var(--star1);
+    color: var(--star1);
+  }
+
+  @media (max-width: 400px) {
+    .question-text { font-size: 2rem; }
+  }
+</style>
+</head>
+<body>
+
+<div class="stars" id="stars"></div>
+<div class="confetti-wrap" id="confetti"></div>
+
+<div class="wrapper">
+  <header>
+    <h1>Talya's Practice Zone</h1>
+    <p>Times tables &amp; clock reading ✨</p>
+  </header>
+
+  <div class="tabs">
+    <button class="tab active" id="tab-times" onclick="switchMode('times')">✖ Times Tables</button>
+    <button class="tab" id="tab-clock" onclick="switchMode('clock')">🕐 Clock Reading</button>
+  </div>
+
+  <div class="scorebar">
+    <div class="score-item correct">
+      <div class="label">Correct</div>
+      <div class="value" id="score-correct">0</div>
+    </div>
+    <div class="score-item streak">
+      <div class="label">Streak 🔥</div>
+      <div class="value" id="score-streak">0</div>
+    </div>
+    <div class="score-item total">
+      <div class="label">Total</div>
+      <div class="value" id="score-total">0</div>
+    </div>
+  </div>
+
+  <details class="settings" id="settings-panel">
+    <summary>Settings</summary>
+    <div class="settings-grid" id="table-chips"></div>
+  </details>
+
+  <div class="question-card" id="question-card">
+    <span class="question-tag times" id="q-tag">Times Tables</span>
+    <div class="question-text" id="q-text"></div>
+    <svg id="clock-face" width="180" height="180" viewBox="0 0 180 180" style="display:none;"></svg>
+
+    <!-- Times answer -->
+    <div class="answer-row" id="times-answer">
+      <input class="answer-input" id="answer" type="number" placeholder="?" autocomplete="off" />
+      <button class="submit-btn" onclick="checkAnswer()">Go!</button>
+    </div>
+
+    <!-- Clock answer -->
+    <div style="display:none" id="clock-answer-wrap">
+      <div class="clock-answer-row">
+        <input class="clock-input" id="clock-h" type="number" placeholder="hh" min="1" max="12" autocomplete="off" />
+        <span class="clock-sep">:</span>
+        <input class="clock-input" id="clock-m" type="number" placeholder="mm" min="0" max="59" autocomplete="off" />
+        <span class="clock-sep">:</span>
+        <input class="clock-input" id="clock-s" type="number" placeholder="ss" min="0" max="59" autocomplete="off" />
+        <button class="submit-btn" onclick="checkAnswer()">Go!</button>
+      </div>
+      <div class="hint" id="clock-hint"></div>
+    </div>
+  </div>
+
+  <div class="feedback hidden" id="feedback"></div>
+  <button class="next-btn hidden" id="next-btn" onclick="nextQuestion()">Next →</button>
+</div>
+
+<script>
+// ── Stars background ────────────────────────────────────────
+const starsEl = document.getElementById('stars');
+for (let i = 0; i < 90; i++) {
+  const s = document.createElement('div');
+  s.className = 'star';
+  const sz = Math.random() * 2.5 + 0.5;
+  s.style.cssText = `width:${sz}px;height:${sz}px;top:${Math.random()*100}%;left:${Math.random()*100}%;--dur:${(Math.random()*3+1.5).toFixed(1)}s;animation-delay:${(Math.random()*3).toFixed(1)}s`;
+  starsEl.appendChild(s);
+}
+
+// ── State ───────────────────────────────────────────────────
+let mode = 'times';
+let correct = 0, streak = 0, total = 0;
+let currentAnswer = null;
+let activeClockAnswer = null;
+let awaitingNext = false;
+
+const activeTables = new Set([8, 9, 12]);
+const allTables = [2,3,4,5,6,7,8,9,10,11,12];
+
+// Clock difficulty: 'hours' = whole hours only, 'minutes' = hours+minutes, 'seconds' = h+m+s
+let clockMode = 'minutes';
+
+// ── Build settings chips ────────────────────────────────────
+function buildChips() {
+  const grid = document.getElementById('table-chips');
+  grid.innerHTML = '';
+  if (mode === 'times') {
+    allTables.forEach(n => {
+      const btn = document.createElement('button');
+      btn.className = 'toggle-chip' + (activeTables.has(n) ? ' on' : '');
+      btn.textContent = n + '×';
+      btn.onclick = () => {
+        if (activeTables.has(n) && activeTables.size === 1) return;
+        activeTables.has(n) ? activeTables.delete(n) : activeTables.add(n);
+        btn.classList.toggle('on');
+      };
+      grid.appendChild(btn);
+    });
+  } else {
+    const clockModes = [
+      { id: 'hours', label: 'Hours only' },
+      { id: 'minutes', label: 'Hours + Minutes' },
+      { id: 'seconds', label: 'Full (H:M:S)' },
+    ];
+    clockModes.forEach(cm => {
+      const btn = document.createElement('button');
+      btn.className = 'toggle-chip' + (clockMode === cm.id ? ' on' : '');
+      btn.textContent = cm.label;
+      btn.onclick = () => {
+        clockMode = cm.id;
+        document.querySelectorAll('#table-chips .toggle-chip').forEach(b => b.classList.remove('on'));
+        btn.classList.add('on');
+        nextQuestion();
+      };
+      grid.appendChild(btn);
+    });
+  }
+}
+
+// ── Mode switch ─────────────────────────────────────────────
+function switchMode(m) {
+  mode = m;
+  document.getElementById('tab-times').classList.toggle('active', m === 'times');
+  document.getElementById('tab-clock').classList.toggle('active', m === 'clock');
+  document.getElementById('settings-panel').open = false;
+  buildChips();
+  resetFeedback();
+  nextQuestion();
+}
+
+// ── Question generators ─────────────────────────────────────
+function rand(min, max) { return Math.floor(Math.random() * (max - min + 1)) + min; }
+
+function newTimesQuestion() {
+  const tables = [...activeTables];
+  const a = tables[rand(0, tables.length - 1)];
+  const b = rand(1, 12);
+  currentAnswer = a * b;
+  document.getElementById('q-tag').textContent = a + '× table';
+  document.getElementById('q-tag').className = 'question-tag times';
+  document.getElementById('q-text').textContent = a + ' × ' + b + ' = ?';
+}
+
+function newClockQuestion() {
+  const h = rand(1, 12);
+  const m = clockMode === 'hours' ? 0 : rand(0, 59);
+  const s = clockMode === 'seconds' ? rand(0, 59) : 0;
+  activeClockAnswer = { h, m, s };
+
+  document.getElementById('q-tag').textContent = 'What time is it?';
+  document.getElementById('q-tag').className = 'question-tag clock';
+  document.getElementById('q-text').textContent = '';
+  drawClock(h, m, s);
+
+  // hint
+  let hint = 'Enter hours and minutes';
+  if (clockMode === 'hours') hint = 'Enter the hour (1–12)';
+  if (clockMode === 'seconds') hint = 'Enter hours, minutes, and seconds';
+  document.getElementById('clock-hint').textContent = hint;
+}
+
+// ── Clock drawing ───────────────────────────────────────────
+function drawClock(h, m, s) {
+  const svg = document.getElementById('clock-face');
+  const cx = 90, cy = 90, r = 80;
+  let markup = '';
+
+  // Face
+  markup += `<circle cx="${cx}" cy="${cy}" r="${r}" fill="rgba(255,255,255,0.08)" stroke="rgba(255,255,255,0.3)" stroke-width="2"/>`;
+
+  // Hour markers
+  for (let i = 1; i <= 12; i++) {
+    const angle = (i / 12) * Math.PI * 2 - Math.PI / 2;
+    const x1 = cx + Math.cos(angle) * 70, y1 = cy + Math.sin(angle) * 70;
+    const x2 = cx + Math.cos(angle) * 76, y2 = cy + Math.sin(angle) * 76;
+    markup += `<line x1="${x1.toFixed(1)}" y1="${y1.toFixed(1)}" x2="${x2.toFixed(1)}" y2="${y2.toFixed(1)}" stroke="rgba(255,255,255,0.5)" stroke-width="2" stroke-linecap="round"/>`;
+  }
+
+  // Minute markers
+  for (let i = 0; i < 60; i++) {
+    if (i % 5 === 0) continue;
+    const angle = (i / 60) * Math.PI * 2 - Math.PI / 2;
+    const x1 = cx + Math.cos(angle) * 73, y1 = cy + Math.sin(angle) * 73;
+    const x2 = cx + Math.cos(angle) * 76, y2 = cy + Math.sin(angle) * 76;
+    markup += `<line x1="${x1.toFixed(1)}" y1="${y1.toFixed(1)}" x2="${x2.toFixed(1)}" y2="${y2.toFixed(1)}" stroke="rgba(255,255,255,0.2)" stroke-width="1"/>`;
+  }
+
+  // Numbers
+  for (let i = 1; i <= 12; i++) {
+    const angle = (i / 12) * Math.PI * 2 - Math.PI / 2;
+    const x = cx + Math.cos(angle) * 58, y = cy + Math.sin(angle) * 58;
+    markup += `<text x="${x.toFixed(1)}" y="${y.toFixed(1)}" text-anchor="middle" dominant-baseline="central" fill="rgba(255,255,255,0.85)" font-size="12" font-family="Fredoka One, cursive">${i}</text>`;
+  }
+
+  // Hour hand
+  const hourAngle = ((h % 12 + m / 60) / 12) * Math.PI * 2 - Math.PI / 2;
+  const hx = cx + Math.cos(hourAngle) * 42, hy = cy + Math.sin(hourAngle) * 42;
+  markup += `<line x1="${cx}" y1="${cy}" x2="${hx.toFixed(1)}" y2="${hy.toFixed(1)}" stroke="#f9d423" stroke-width="4" stroke-linecap="round"/>`;
+
+  // Minute hand
+  if (clockMode !== 'hours') {
+    const minAngle = (m / 60) * Math.PI * 2 - Math.PI / 2;
+    const mx2 = cx + Math.cos(minAngle) * 60, my2 = cy + Math.sin(minAngle) * 60;
+    markup += `<line x1="${cx}" y1="${cy}" x2="${mx2.toFixed(1)}" y2="${my2.toFixed(1)}" stroke="white" stroke-width="3" stroke-linecap="round"/>`;
+  }
+
+  // Second hand
+  if (clockMode === 'seconds') {
+    const secAngle = (s / 60) * Math.PI * 2 - Math.PI / 2;
+    const sx2 = cx + Math.cos(secAngle) * 66, sy2 = cy + Math.sin(secAngle) * 66;
+    markup += `<line x1="${cx}" y1="${cy}" x2="${sx2.toFixed(1)}" y2="${sy2.toFixed(1)}" stroke="#ff6ec7" stroke-width="1.5" stroke-linecap="round"/>`;
+  }
+
+  // Center dot
+  markup += `<circle cx="${cx}" cy="${cy}" r="4" fill="white"/>`;
+
+  svg.innerHTML = markup;
+}
+
+// ── Next question ───────────────────────────────────────────
+function nextQuestion() {
+  awaitingNext = false;
+  resetFeedback();
+
+  const card = document.getElementById('question-card');
+  card.classList.remove('flash-correct', 'flash-wrong');
+
+  const timesAnswer = document.getElementById('times-answer');
+  const clockWrap = document.getElementById('clock-answer-wrap');
+  const clockFace = document.getElementById('clock-face');
+
+  if (mode === 'times') {
+    clockFace.style.display = 'none';
+    timesAnswer.style.display = 'flex';
+    clockWrap.style.display = 'none';
+    newTimesQuestion();
+    const inp = document.getElementById('answer');
+    inp.value = '';
+    setTimeout(() => inp.focus(), 50);
+  } else {
+    clockFace.style.display = 'block';
+    timesAnswer.style.display = 'none';
+    clockWrap.style.display = 'block';
+    newClockQuestion();
+    document.getElementById('clock-h').value = '';
+    document.getElementById('clock-m').value = '';
+    document.getElementById('clock-s').value = '';
+    // hide fields based on mode
+    const sepEls = document.querySelectorAll('.clock-sep');
+    const mInp = document.getElementById('clock-m');
+    const sInp = document.getElementById('clock-s');
+    if (clockMode === 'hours') {
+      mInp.style.display = 'none';
+      sInp.style.display = 'none';
+      sepEls.forEach(e => e.style.display = 'none');
+    } else if (clockMode === 'minutes') {
+      mInp.style.display = '';
+      sInp.style.display = 'none';
+      sepEls[0].style.display = '';
+      sepEls[1].style.display = 'none';
+    } else {
+      mInp.style.display = '';
+      sInp.style.display = '';
+      sepEls.forEach(e => e.style.display = '');
+    }
+    setTimeout(() => document.getElementById('clock-h').focus(), 50);
+  }
+}
+
+// ── Check answer ────────────────────────────────────────────
+function checkAnswer() {
+  if (awaitingNext) return;
+
+  let userAnswer, isCorrect;
+
+  if (mode === 'times') {
+    const val = parseInt(document.getElementById('answer').value, 10);
+    if (isNaN(val)) return;
+    userAnswer = val;
+    isCorrect = val === currentAnswer;
+  } else {
+    const hVal = parseInt(document.getElementById('clock-h').value, 10);
+    if (isNaN(hVal)) return;
+    const mVal = clockMode === 'hours' ? 0 : parseInt(document.getElementById('clock-m').value, 10);
+    const sVal = clockMode === 'seconds' ? parseInt(document.getElementById('clock-s').value, 10) : 0;
+    if (clockMode !== 'hours' && isNaN(mVal)) return;
+    if (clockMode === 'seconds' && isNaN(sVal)) return;
+    isCorrect = hVal === activeClockAnswer.h && mVal === activeClockAnswer.m && sVal === activeClockAnswer.s;
+    userAnswer = { h: hVal, m: mVal, s: sVal };
+  }
+
+  total++;
+  document.getElementById('score-total').textContent = total;
+
+  const card = document.getElementById('question-card');
+  const fb = document.getElementById('feedback');
+  const nextBtn = document.getElementById('next-btn');
+
+  if (isCorrect) {
+    correct++;
+    streak++;
+    document.getElementById('score-correct').textContent = correct;
+    document.getElementById('score-streak').textContent = streak;
+    card.classList.add('flash-correct');
+    fb.textContent = pick(['Amazing! 🌟', 'Brilliant! ✨', 'Superstar! 🚀', 'Perfect! 💫', 'Yes!! 🎉', 'Nailed it! 🎯']);
+    fb.className = 'feedback correct';
+    if (streak % 5 === 0) launchConfetti();
+  } else {
+    streak = 0;
+    document.getElementById('score-streak').textContent = 0;
+    card.classList.add('flash-wrong');
+    if (mode === 'times') {
+      fb.textContent = 'Not quite — the answer is ' + currentAnswer + ' 💪';
+    } else {
+      const a = activeClockAnswer;
+      let ans = padTwo(a.h) + ':' + padTwo(a.m);
+      if (clockMode === 'seconds') ans += ':' + padTwo(a.s);
+      fb.textContent = 'Almost! It was ' + ans + ' 💪';
+    }
+    fb.className = 'feedback wrong';
+  }
+
+  awaitingNext = true;
+  nextBtn.classList.remove('hidden');
+}
+
+function padTwo(n) { return n < 10 ? '0' + n : '' + n; }
+function pick(arr) { return arr[Math.floor(Math.random() * arr.length)]; }
+
+function resetFeedback() {
+  const fb = document.getElementById('feedback');
+  fb.className = 'feedback hidden';
+  fb.textContent = '';
+  document.getElementById('next-btn').classList.add('hidden');
+}
+
+// ── Confetti ────────────────────────────────────────────────
+function launchConfetti() {
+  const wrap = document.getElementById('confetti');
+  const colors = ['#f9d423','#ff6ec7','#38f9d7','#a855f7','#4ade80','#fb923c'];
+  for (let i = 0; i < 60; i++) {
+    const c = document.createElement('div');
+    c.className = 'confetto';
+    c.style.cssText = `
+      left:${Math.random()*100}%;
+      background:${colors[Math.floor(Math.random()*colors.length)]};
+      width:${rand(6,12)}px;height:${rand(6,12)}px;
+      border-radius:${Math.random()>0.5?'50%':'2px'};
+      animation-duration:${(Math.random()*1.5+1).toFixed(2)}s;
+      animation-delay:${(Math.random()*0.5).toFixed(2)}s;
+    `;
+    wrap.appendChild(c);
+    c.addEventListener('animationend', () => c.remove());
+  }
+}
+
+// ── Keyboard ─────────────────────────────────────────────────
+document.addEventListener('keydown', e => {
+  if (e.key === 'Enter') {
+    if (awaitingNext) nextQuestion();
+    else checkAnswer();
+  }
+});
+
+// Tab between clock inputs
+document.getElementById('clock-h').addEventListener('keydown', e => {
+  if (e.key === 'Enter' && !awaitingNext) {
+    if (clockMode !== 'hours') document.getElementById('clock-m').focus();
+    else checkAnswer();
+  }
+});
+document.getElementById('clock-m').addEventListener('keydown', e => {
+  if (e.key === 'Enter' && !awaitingNext) {
+    if (clockMode === 'seconds') document.getElementById('clock-s').focus();
+    else checkAnswer();
+  }
+});
+
+// ── Init ─────────────────────────────────────────────────────
+buildChips();
+nextQuestion();
+</script>
+</body>
+</html>
