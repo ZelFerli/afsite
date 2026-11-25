@@ -1,0 +1,739 @@
+
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Deutschland entdecken – Talya's Lernportal</title>
+
+<style>
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    background: #f4f5ef;
+    color: #233b39;
+    font: 17px system-ui, sans-serif;
+}
+
+main {
+    max-width: 1000px;
+    margin: auto;
+    padding: 24px;
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+}
+
+h1 {
+    font-size: clamp(30px, 5vw, 48px);
+    margin: 12px 0;
+}
+
+h2 {
+    margin-top: 0;
+}
+
+p {
+    line-height: 1.5;
+}
+
+button, input {
+    font: inherit;
+}
+
+button {
+    cursor: pointer;
+    border: 1px solid #cbd8d0;
+    border-radius: 12px;
+    padding: 12px 16px;
+    background: white;
+    color: #233b39;
+    font-weight: 650;
+}
+
+button:hover {
+    background: #e1eee5;
+}
+
+button:focus-visible, input:focus-visible {
+    outline: 3px solid #d88b37;
+}
+
+nav {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin: 24px 0;
+}
+
+nav button.active, .primary {
+    background: #245e53;
+    color: white;
+    border-color: #245e53;
+}
+
+.panel {
+    background: white;
+    border: 1px solid #dce3da;
+    border-radius: 22px;
+    padding: 24px;
+    box-shadow: 0 6px 24px #233b3909;
+}
+
+.layout {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+}
+
+.map {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    grid-template-rows: repeat(6, 58px);
+    gap: 5px;
+    max-width: 480px;
+    margin: auto;
+}
+
+.tile {
+    padding: 3px;
+    font-size: 14px;
+    background: #d9e9dd;
+    line-height: 1.1;
+}
+
+.tile.city {
+    background: #f6d7a5;
+}
+
+.tile.selected {
+    background: #245e53;
+    color: white;
+}
+
+.muted {
+    color: #60736d;
+    font-size: 14px;
+}
+
+.big {
+    font-size: clamp(25px, 5vw, 42px);
+    font-weight: 750;
+    margin: 25px 0;
+}
+
+.actions {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-top: 18px;
+}
+
+.options {
+    display: grid;
+    gap: 10px;
+    margin: 18px 0;
+}
+
+.options button {
+    text-align: left;
+}
+
+.good {
+    background: #d8f0df !important;
+}
+
+.bad {
+    background: #f9dcd5 !important;
+}
+
+input {
+    padding: 12px;
+    border: 1px solid #a9bcb2;
+    border-radius: 10px;
+    width: 100%;
+    max-width: 400px;
+}
+
+progress {
+    width: 100%;
+    height: 16px;
+    accent-color: #245e53;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+td, th {
+    text-align: left;
+    padding: 10px;
+    border-bottom: 1px solid #e3e9e3;
+}
+
+small {
+    font-size: 13px;
+}
+
+@media (max-width: 650px) {
+    main {
+        padding: 14px;
+    }
+
+    .layout {
+        grid-template-columns: 1fr;
+    }
+
+    .panel {
+        padding: 16px;
+    }
+
+    .map {
+        grid-template-rows: repeat(6, 48px);
+    }
+
+    .tile {
+        font-size: 12px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<main>
+    <header>
+        <span>🧭 SACHUNTERRICHT · KLASSE 4</span>
+        <button id="lang">English help: off</button>
+    </header>
+
+    <h1>Deutschland entdecken</h1>
+
+    <p>
+        Hallo, Talya! Entdecke die 16 Bundesländer
+        und ihre Landeshauptstädte.
+    </p>
+
+    <nav id="nav"></nav>
+
+    <div id="content" class="panel"></div>
+
+    <p class="muted">
+        Deutschland · 16 Bundesländer · 3 Stadtstaaten
+    </p>
+</main>
+
+<script>
+
+// Bundesländer, capitals, abbreviations and map positions
+
+const states = [
+    ['Schleswig-Holstein', 'Kiel', 'SH', 3, 1],
+    ['Hamburg', 'Hamburg', 'HH', 3, 2, 1],
+    ['Mecklenburg-Vorpommern', 'Schwerin', 'MV', 4, 1],
+    ['Bremen', 'Bremen', 'HB', 2, 2, 1],
+    ['Niedersachsen', 'Hannover', 'NI', 2, 3],
+    ['Brandenburg', 'Potsdam', 'BB', 5, 3],
+    ['Berlin', 'Berlin', 'BE', 5, 2, 1],
+    ['Sachsen-Anhalt', 'Magdeburg', 'ST', 4, 3],
+    ['Nordrhein-Westfalen', 'Düsseldorf', 'NW', 1, 4],
+    ['Hessen', 'Wiesbaden', 'HE', 2, 4],
+    ['Thüringen', 'Erfurt', 'TH', 3, 4],
+    ['Sachsen', 'Dresden', 'SN', 4, 4],
+    ['Rheinland-Pfalz', 'Mainz', 'RP', 1, 5],
+    ['Saarland', 'Saarbrücken', 'SL', 1, 6],
+    ['Baden-Württemberg', 'Stuttgart', 'BW', 2, 6],
+    ['Bayern', 'München', 'BY', 4, 6]
+];
+
+let help = false;
+let tab = 0;
+let selected = 6;
+let idx = 0;
+let flip = false;
+let q = null;
+let answered = false;
+let score = 0;
+let total = 0;
+let mode = 0;
+let progress = {};
+
+try {
+    progress = JSON.parse(
+        localStorage.getItem('talya-geography-v1') || '{}'
+    );
+} catch (e) {}
+
+const $ = id => document.getElementById(id);
+const c = $('content');
+
+const tr = (de, en) => de + (help ? ' · ' + en : '');
+
+function shuffle(array) {
+    const a = [...array];
+
+    for (let i = a.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [a[i], a[j]] = [a[j], a[i]];
+    }
+
+    return a;
+}
+
+// Save learning progress
+
+function save() {
+    try {
+        localStorage.setItem(
+            'talya-geography-v1',
+            JSON.stringify(progress)
+        );
+    } catch (e) {}
+}
+
+function record(i, dir, ok) {
+    let key = i + '-' + dir;
+
+    progress[key] = ok
+        ? (progress[key] || 0) + 1
+        : 0;
+
+    save();
+}
+
+// Navigation
+
+function nav() {
+    const labels = [
+        '🗺 Karte',
+        '📚 Lernkarten',
+        '🎯 Quiz',
+        '⌨ Hauptstadt-Challenge',
+        '⭐ Fortschritt'
+    ];
+
+    $('nav').innerHTML = labels.map((x, i) => `
+        <button
+            class="${tab === i ? 'active' : ''}"
+            onclick="go(${i})">
+            ${x}
+        </button>
+    `).join('');
+}
+
+function go(i) {
+    tab = i;
+    flip = false;
+
+    if (i === 2 || i === 3) {
+        score = 0;
+        total = 0;
+        next();
+    } else {
+        render();
+    }
+
+    nav();
+}
+
+$('lang').onclick = () => {
+    help = !help;
+
+    $('lang').textContent =
+        'English help: ' + (help ? 'on' : 'off');
+
+    render();
+};
+
+// Main display
+
+function render() {
+
+    // Interactive schematic map
+
+    if (tab === 0) {
+        let s = states[selected];
+
+        c.innerHTML = `
+            <h2>
+                ${tr(
+                    'Wo liegt welches Bundesland?',
+                    'Where is each state?'
+                )}
+            </h2>
+
+            <div class="layout">
+                <div>
+                    <div class="map">
+                        ${states.map((a, i) => `
+                            <button
+                                aria-label="${a[0]}"
+                                class="tile
+                                    ${a[5] ? 'city' : ''}
+                                    ${selected === i ? 'selected' : ''}"
+                                style="
+                                    grid-column: ${a[3]};
+                                    grid-row: ${a[4]};
+                                "
+                                onclick="selected=${i};render()">
+                                ${a[2]}
+                            </button>
+                        `).join('')}
+                    </div>
+
+                    <p class="muted">
+                        ${tr(
+                            'Schematische Karte: ungefähre Lage, keine echten Grenzen.',
+                            'Tile map: approximate positions, not actual borders.'
+                        )}
+                    </p>
+                </div>
+
+                <div>
+                    <span class="muted">BUNDESLAND</span>
+                    <div class="big">${s[0]}</div>
+
+                    <span class="muted">LANDESHAUPTSTADT</span>
+                    <div class="big">${s[1]}</div>
+
+                    <p>
+                        ${s[5] ? tr(
+                            'Ein Stadtstaat: Stadt und Bundesland zugleich.',
+                            'A city-state: both a city and a federal state.'
+                        ) : ''}
+                    </p>
+                </div>
+            </div>
+
+            <details>
+                <summary>
+                    ${tr('Alle 16 Bundesländer', 'All 16 states')}
+                </summary>
+
+                <table>
+                    <tr>
+                        <th>Bundesland</th>
+                        <th>Hauptstadt</th>
+                    </tr>
+
+                    ${states.map(a => `
+                        <tr>
+                            <td>${a[0]}</td>
+                            <td>${a[1]}</td>
+                        </tr>
+                    `).join('')}
+                </table>
+            </details>
+        `;
+    }
+
+    // Flashcards
+
+    else if (tab === 1) {
+        let s = states[idx];
+
+        c.innerHTML = `
+            <h2>${tr('Lernkarten', 'Flashcards')}</h2>
+
+            <p>${idx + 1} / 16</p>
+
+            <progress value="${idx + 1}" max="16"></progress>
+
+            <p>
+                ${tr(
+                    'Wie heißt die Hauptstadt von …?',
+                    'What is the capital of …?'
+                )}
+            </p>
+
+            <div class="big">${s[0]}</div>
+
+            <button class="primary"
+                onclick="flip=!flip;render()">
+                ${flip ? s[1] : tr('Antwort zeigen', 'Reveal answer')}
+            </button>
+
+            <div class="actions">
+                <button
+                    onclick="idx=(idx+15)%16;flip=false;render()">
+                    ← Zurück
+                </button>
+
+                <button
+                    onclick="idx=(idx+1)%16;flip=false;render()">
+                    Weiter →
+                </button>
+            </div>
+        `;
+    }
+
+    // Quiz and typing challenge
+
+    else if (tab === 2 || tab === 3) {
+        let s = states[q.i];
+        let dir = q.dir;
+
+        c.innerHTML = `
+            <h2>
+                ${tab === 2 ? 'Quiz' : 'Hauptstadt-Challenge'}
+            </h2>
+
+            <p>
+                ${tr('Richtig', 'Correct')}: ${score} / ${total}
+            </p>
+
+            ${tab === 2 ? `
+                <div class="actions">
+                    <button onclick="mode=0;next()">
+                        Bundesland → Hauptstadt
+                    </button>
+
+                    <button onclick="mode=1;next()">
+                        Hauptstadt → Bundesland
+                    </button>
+
+                    <button onclick="mode=2;next()">
+                        Mix
+                    </button>
+                </div>
+            ` : ''}
+
+            <p>
+                ${dir ? tr(
+                    'Zu welchem Bundesland gehört diese Hauptstadt?',
+                    'Which state has this capital?'
+                ) : tr(
+                    'Wie heißt die Hauptstadt von …?',
+                    'What is the capital of …?'
+                )}
+            </p>
+
+            <div class="big">${s[dir ? 1 : 0]}</div>
+
+            ${tab === 2 ? `
+                <div class="options">
+                    ${q.opts.map(i => `
+                        <button
+                            ${answered ? 'disabled' : ''}
+                            class="${answered
+                                ? (i === q.i
+                                    ? 'good'
+                                    : i === q.pick ? 'bad' : '')
+                                : ''}"
+                            onclick="answer(${i})">
+                            ${states[i][dir ? 0 : 1]}
+                        </button>
+                    `).join('')}
+                </div>
+            ` : `
+                <form onsubmit="event.preventDefault();answerText()">
+                    <input
+                        id="guess"
+                        autocomplete="off"
+                        placeholder="Hauptstadt …"
+                        ${answered ? 'disabled' : ''}
+                        value="${answered
+                            ? escapeHtml(q.guess || '')
+                            : ''}">
+
+                    <button class="primary"
+                        ${answered ? 'disabled' : ''}>
+                        Prüfen
+                    </button>
+                </form>
+            `}
+
+            ${answered ? `
+                <p role="status">
+                    ${q.ok
+                        ? '🌟 ' + tr('Richtig!', 'Correct!')
+                        : '💡 ' + tr(
+                            'Die richtige Antwort ist',
+                            'The correct answer is'
+                        ) + ': ' + s[dir ? 0 : 1]}
+                </p>
+
+                <button class="primary" onclick="next()">
+                    ${tr('Nächste Frage', 'Next question')} →
+                </button>
+            ` : ''}
+        `;
+    }
+
+    // Progress dashboard
+
+    else {
+        let mastered = states.filter((s, i) =>
+            (progress[i + '-0'] || 0) >= 2 &&
+            (progress[i + '-1'] || 0) >= 2
+        ).length;
+
+        c.innerHTML = `
+            <h2>${tr('Dein Fortschritt', 'Your progress')}</h2>
+
+            <div class="big">${mastered} / 16 ⭐</div>
+
+            <progress value="${mastered}" max="16"></progress>
+
+            <p>
+                ${tr(
+                    'Ein Stern: zweimal hintereinander richtig in beiden Richtungen.',
+                    'A star: two correct answers in a row in each direction.'
+                )}
+            </p>
+
+            ${mastered === 16 ? `
+                <h2>🏆 Fantastisch, Talya!</h2>
+                <p>
+                    Du kennst alle 16 Bundesländer
+                    und ihre Hauptstädte!
+                </p>
+            ` : ''}
+
+            <table>
+                <tr>
+                    <th>Bundesland</th>
+                    <th>→ Hauptstadt</th>
+                    <th>← Bundesland</th>
+                </tr>
+
+                ${states.map((s, i) => `
+                    <tr>
+                        <td>${s[0]}</td>
+
+                        ${[0, 1].map(d => `
+                            <td>
+                                ${(progress[i + '-' + d] || 0) >= 2
+                                    ? '⭐'
+                                    : (progress[i + '-' + d] || 0) === 1
+                                        ? '✓'
+                                        : '○'}
+                            </td>
+                        `).join('')}
+                    </tr>
+                `).join('')}
+            </table>
+
+            <div class="actions">
+                <button onclick="
+                    if(confirm('Fortschritt löschen?')) {
+                        progress={};
+                        save();
+                        render();
+                    }
+                ">
+                    Zurücksetzen
+                </button>
+            </div>
+        `;
+    }
+}
+
+// Prevent HTML injection
+
+function escapeHtml(s) {
+    return s.replace(/[&<>"']/g, x => ({
+        '&': '&amp;',
+        '<': '&lt;',
+        '>': '&gt;',
+        '"': '&quot;',
+        "'": '&#39;'
+    }[x]));
+}
+
+// Generate questions, prioritising unmastered states
+
+function next() {
+    let dir = tab === 3
+        ? 0
+        : mode === 2
+            ? Math.floor(Math.random() * 2)
+            : mode;
+
+    let pool = states
+        .map((_, i) => i)
+        .filter(i => !q || i !== q.i);
+
+    let weak = pool.filter(
+        i => (progress[i + '-' + dir] || 0) < 2
+    );
+
+    let choices = weak.length ? weak : pool;
+
+    let i = choices[
+        Math.floor(Math.random() * choices.length)
+    ];
+
+    q = {
+        i,
+        dir,
+        opts: shuffle([
+            i,
+            ...shuffle(pool.filter(j => j !== i)).slice(0, 3)
+        ])
+    };
+
+    answered = false;
+    render();
+}
+
+function answer(i) {
+    if (answered) return;
+
+    q.pick = i;
+    finish(i === q.i);
+}
+
+// Accept German umlaut alternatives
+
+function norm(s) {
+    return s
+        .toLowerCase()
+        .trim()
+        .replace(/ä/g, 'ae')
+        .replace(/ö/g, 'oe')
+        .replace(/ü/g, 'ue')
+        .replace(/ß/g, 'ss');
+}
+
+function answerText() {
+    if (answered) return;
+
+    q.guess = $('guess').value;
+
+    if (!q.guess.trim()) return;
+
+    finish(
+        norm(q.guess) === norm(states[q.i][1])
+    );
+}
+
+function finish(ok) {
+    q.ok = ok;
+    answered = true;
+
+    total++;
+
+    if (ok) score++;
+
+    record(q.i, q.dir, ok);
+    render();
+}
+
+// Initialise website
+
+nav();
+render();
+
+</script>
+
+</body>
+</html>
